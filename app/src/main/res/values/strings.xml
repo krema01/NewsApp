@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">MyNews</string>
+    <string name="hint_filter">Filter</string>
+    <string name="text_search">Suchen</string>
+    <string name="filter_language">Sprache filtern</string>
+    <string name="filter_country">Land filtern</string>
+    <string name="open_help">Hilfe</string>
+    <string name="more_filters">Mehr Filter</string>
+    <string name="select_country">Länder wählen</string>
+    <string name="select_language">Sprachen auswählen</string>
+    <string name="select_categories">Kategorien auswählen</string>
+    <string name="save_filters">Filter speichern</string>
+</resources>
