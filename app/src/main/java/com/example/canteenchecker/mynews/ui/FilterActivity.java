@@ -428,13 +428,13 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     private void updateLabelFrom(){
-        String myFormat="MM/dd/yy";
+        String myFormat="yyyy-MM-dd";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
-        fromDateTextView.setText(dateFormat.format(myCalendar.getTime()));
+        fromDateTextView.setText("from_date=" + dateFormat.format(myCalendar.getTime()));
     }
     private void updateLabelTo(){
-        String myFormat="MM/dd/yy";
+        String myFormat="yyyy-MM-dd";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
-        toDateTextView.setText(dateFormat.format(myCalendar.getTime()));
+        toDateTextView.setText("to_date=" +dateFormat.format(myCalendar.getTime()));
     }
 }

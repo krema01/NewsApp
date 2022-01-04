@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,33 +37,33 @@ import java.util.Collection;
 
 
 public class HomeActivity extends AppCompatActivity {
-
     private String TAG = getClass().getName();
 
-    public Collection<NewsArticle> allArticles = new ArrayList<NewsArticle>();
-    private SwipeRefreshLayout srlSwipeRefreshLayout;
-
-    boolean[] selectedCountries =  new boolean[Constants.COUNTRIES_AVAILABLE.length];
-    ArrayList<Integer> countriesList = new ArrayList<>();
     private MenuItem moreFilters;
     private MenuItem help;
+
+    private SwipeRefreshLayout srlSwipeRefreshLayout;
+    EditText keywordSearch;
+    Button btnSearch;
+
+    public Collection<NewsArticle> allArticles = new ArrayList<NewsArticle>();
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Log.d(TAG, "onCreate()");
-
         srlSwipeRefreshLayout = findViewById(R.id.srlSwipeRefreshLayout);
         srlSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 //Todo: load next page from API
+                updateNews();
             }
         });
 
-        Button btnSearch = findViewById(R.id.btnSearch);
+        btnSearch = findViewById(R.id.btnSearch);
         btnSearch.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -69,8 +71,10 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        keywordSearch = findViewById(R.id.edtKeywordSearch);
     }
 
+    /*========== Options Menu ==========*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_activity_home_screen, menu);
@@ -109,6 +113,8 @@ public class HomeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    /*========== Helper Functions ==========*/
     @SuppressLint("StaticFieldLeak")
     private void updateNews() {
         new AsyncTask<String, Void, Collection<NewsArticle>>(){
@@ -118,6 +124,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 try {
                     URL url = new URL(buildUrlWithFilters());
+                    Log.e("URL ==> ", url.toString());
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
                     conn.setRequestMethod("GET");
@@ -130,6 +137,8 @@ public class HomeActivity extends AppCompatActivity {
                         throw new RuntimeException("HttpResponseCode: " + responseCode);
                     }
                     else{
+                        FilterSettings.setPage(FilterSettings.getPage()+1);
+
                         BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                         StringBuilder sb = new StringBuilder();
                         String line;
@@ -159,18 +168,51 @@ public class HomeActivity extends AppCompatActivity {
     private String buildUrlWithFilters() {
         StringBuilder sb = new StringBuilder();
         sb.append(Constants.BASE_URL);
+        Log.e("URLBUILDER: ", sb.toString());
         sb.append(Constants.API);
+        Log.e("URLBUILDER: ", sb.toString());
         if(FilterSettings.getCountriesFilter() != null) {
             sb.append(Constants.AND);
+            Log.e("URLBUILDER: ", sb.toString());
             sb.append(FilterSettings.getCountriesFilter());
+            Log.e("URLBUILDER: ", sb.toString());
         }
         if(FilterSettings.getCategoriesFilter() != null) {
             sb.append(Constants.AND);
+            Log.e("URLBUILDER: ", sb.toString());
             sb.append(FilterSettings.getCategoriesFilter());
+            Log.e("URLBUILDER: ", sb.toString());
         }
         if(FilterSettings.getLanguagesFilter() != null) {
             sb.append(Constants.AND);
+            Log.e("URLBUILDER: ", sb.toString());
             sb.append(FilterSettings.getLanguagesFilter());
+            Log.e("URLBUILDER: ", sb.toString());
+        }
+        if(FilterSettings.getDateFromFilter() != null){
+            sb.append(Constants.AND);
+            Log.e("URLBUILDER: ", sb.toString());
+            sb.append(FilterSettings.getDateFromFilter());
+            Log.e("URLBUILDER: ", sb.toString());
+        }
+        if(FilterSettings.getDateToFilter() != null){
+            sb.append(Constants.AND);
+            Log.e("URLBUILDER: ", sb.toString());
+            sb.append(FilterSettings.getDateToFilter());
+            Log.e("URLBUILDER: ", sb.toString());
+        }
+        if(keywordSearch.getText() != null){
+            Log.e("KEYWORD: ", keywordSearch.getText().toString());
+            sb.append(Constants.AND + "q=");
+            Log.e("URLBUILDER: ", sb.toString());
+            sb.append(keywordSearch.getText().toString());
+            Log.e("URLBUILDER: ", sb.toString());
+        }
+        if(FilterSettings.getPage() > 0){
+            sb.append(Constants.AND);
+            Log.e("URLBUILDER: ", sb.toString());
+            sb.append("page=" + FilterSettings.getPage());
+            Log.e("URLBUILDER: ", sb.toString());
         }
         //Todo: add q (filter for keyword)
         //Todo: add page (increase page count after using it once)
