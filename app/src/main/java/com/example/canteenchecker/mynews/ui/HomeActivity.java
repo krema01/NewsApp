@@ -5,19 +5,25 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Filter;
+import android.widget.ImageView;
+import android.widget.TableLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.bumptech.glide.Glide;
 import com.example.canteenchecker.mynews.R;
 import com.example.canteenchecker.mynews.core.Constants;
 import com.example.canteenchecker.mynews.core.FilterSettings;
@@ -34,11 +40,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 public class HomeActivity extends AppCompatActivity {
     private String TAG = getClass().getName();
 
+    private NewsArticleAdapter newsArticleAdapter = new NewsArticleAdapter();
     private MenuItem moreFilters;
     private MenuItem help;
 
@@ -47,7 +55,7 @@ public class HomeActivity extends AppCompatActivity {
     Button btnSearch;
 
     public Collection<NewsArticle> allArticles = new ArrayList<NewsArticle>();
-
+    private String lastKeyword;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -117,6 +125,7 @@ public class HomeActivity extends AppCompatActivity {
     /*========== Helper Functions ==========*/
     @SuppressLint("StaticFieldLeak")
     private void updateNews() {
+        srlSwipeRefreshLayout.setRefreshing(true);
         new AsyncTask<String, Void, Collection<NewsArticle>>(){
 
             @Override
@@ -132,11 +141,11 @@ public class HomeActivity extends AppCompatActivity {
 
                     int responseCode = conn.getResponseCode();
                     Log.e(TAG, "success" + responseCode);
-
                     if(responseCode != 200){
                         throw new RuntimeException("HttpResponseCode: " + responseCode);
                     }
                     else{
+                        allArticles.clear();
                         FilterSettings.setPage(FilterSettings.getPage()+1);
 
                         BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -159,8 +168,15 @@ public class HomeActivity extends AppCompatActivity {
                             Log.e(TAG, "allArticleCount: " + allArticles.size());
                         }
                     }
-                    return null;
+                    return allArticles;
                 }catch(Exception e){Log.e(TAG, "1" + e.getMessage()); return null;}
+            }
+
+            @Override
+            protected void onPostExecute(Collection<NewsArticle> newsArticles) {
+                srlSwipeRefreshLayout.setRefreshing(false);
+                Log.e("SHOULD SHOW NOW:", "" + newsArticles.size());
+                newsArticleAdapter.displayNewsArticles(newsArticles);
             }
         }.execute();
     }
@@ -168,55 +184,51 @@ public class HomeActivity extends AppCompatActivity {
     private String buildUrlWithFilters() {
         StringBuilder sb = new StringBuilder();
         sb.append(Constants.BASE_URL);
-        Log.e("URLBUILDER: ", sb.toString());
         sb.append(Constants.API);
-        Log.e("URLBUILDER: ", sb.toString());
-        if(FilterSettings.getCountriesFilter() != null) {
+        if(FilterSettings.getCountriesFilter() != "" && FilterSettings.getCountriesFilter() != null) {
             sb.append(Constants.AND);
-            Log.e("URLBUILDER: ", sb.toString());
             sb.append(FilterSettings.getCountriesFilter());
-            Log.e("URLBUILDER: ", sb.toString());
         }
-        if(FilterSettings.getCategoriesFilter() != null) {
+        if(FilterSettings.getCategoriesFilter() != "" && FilterSettings.getCategoriesFilter() != null) {
             sb.append(Constants.AND);
-            Log.e("URLBUILDER: ", sb.toString());
             sb.append(FilterSettings.getCategoriesFilter());
-            Log.e("URLBUILDER: ", sb.toString());
         }
-        if(FilterSettings.getLanguagesFilter() != null) {
+        if(FilterSettings.getLanguagesFilter() != "" && FilterSettings.getLanguagesFilter() != null) {
             sb.append(Constants.AND);
-            Log.e("URLBUILDER: ", sb.toString());
             sb.append(FilterSettings.getLanguagesFilter());
-            Log.e("URLBUILDER: ", sb.toString());
         }
-        if(FilterSettings.getDateFromFilter() != null){
+        if(FilterSettings.getDateFromFilter() != "" && FilterSettings.getDateFromFilter() != null){
             sb.append(Constants.AND);
-            Log.e("URLBUILDER: ", sb.toString());
             sb.append(FilterSettings.getDateFromFilter());
-            Log.e("URLBUILDER: ", sb.toString());
         }
-        if(FilterSettings.getDateToFilter() != null){
+        if(FilterSettings.getDateToFilter() != "" && FilterSettings.getDateToFilter() != null){
             sb.append(Constants.AND);
-            Log.e("URLBUILDER: ", sb.toString());
             sb.append(FilterSettings.getDateToFilter());
-            Log.e("URLBUILDER: ", sb.toString());
         }
-        if(keywordSearch.getText() != null){
-            Log.e("KEYWORD: ", keywordSearch.getText().toString());
+        if(keywordSearch.getText().toString() != null && !keywordSearch.getText().toString().matches("")){
+            String keywordString = parseKeywords();
+            if(keywordString != lastKeyword){
+                FilterSettings.setPage(0);
+                lastKeyword = keywordString;
+            }
             sb.append(Constants.AND + "q=");
-            Log.e("URLBUILDER: ", sb.toString());
-            sb.append(keywordSearch.getText().toString());
-            Log.e("URLBUILDER: ", sb.toString());
+            sb.append(keywordString);
         }
         if(FilterSettings.getPage() > 0){
             sb.append(Constants.AND);
-            Log.e("URLBUILDER: ", sb.toString());
             sb.append("page=" + FilterSettings.getPage());
-            Log.e("URLBUILDER: ", sb.toString());
         }
-        //Todo: add q (filter for keyword)
-        //Todo: add page (increase page count after using it once)
 
+        return sb.toString();
+    }
+
+    private String parseKeywords() {
+        StringBuilder sb = new StringBuilder();
+        String keyword = keywordSearch.getText().toString();
+        for(int i = 0; i < keyword.length(); ++i) {
+            if (keyword.charAt(i) != ' ') sb.append(keyword.charAt(i));
+            else sb.append("%20");
+        }
         return sb.toString();
     }
 
@@ -234,6 +246,75 @@ public class HomeActivity extends AppCompatActivity {
                 jsonObject.getString("source_id")
         );
         allArticles.add(article);
+    }
+
+    static private class NewsArticleAdapter extends RecyclerView.Adapter<NewsArticleAdapter.ViewHolder>{
+
+        private List<NewsArticle> newsArticleList = new ArrayList<>();
+
+        @NonNull
+        @Override
+        public NewsArticleAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_news_article, parent, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull NewsArticleAdapter.ViewHolder holder, int position) {
+            holder.updateView(newsArticleList.get(position));
+        }
+
+        @Override
+        public int getItemCount() {
+            return newsArticleList.size();
+        }
+
+        void displayNewsArticles(Collection<NewsArticle> newsArticles){
+            Log.e("SHOULD SHOW NOW:", "" + newsArticles.size());
+            newsArticleList.clear();
+            if(newsArticles != null){
+                Log.e("ADDING:", "" + newsArticles.size());
+                newsArticleList.addAll(newsArticles);
+            }
+            notifyDataSetChanged();
+        }
+
+        static class ViewHolder extends RecyclerView.ViewHolder{
+
+            private final TextView itemTitleView = itemView.findViewById(R.id.itemTitleView);
+            private final TextView itemSourceView = itemView.findViewById(R.id.itemSourceView);
+            private final TextView itemPublishDateView = itemView.findViewById(R.id.itemPublishDateView);
+            private final TextView itemDescriptionView = itemView.findViewById(R.id.itemDescriptionView);
+            private final ImageView itemImageView = itemView.findViewById(R.id.itemImageView);
+
+            public ViewHolder(@NonNull View itemView) {
+                super(itemView);
+            }
+
+            void updateView(NewsArticle newsArticle){
+                itemTitleView.setText(newsArticle.getTitle());
+                itemSourceView.setText(newsArticle.getSourceID());
+                itemPublishDateView.setText(newsArticle.getPublishDate());
+                itemDescriptionView.setText(newsArticle.getDescription());
+
+                //setImage(itemImageView, newsArticle);
+
+
+                itemView.setOnClickListener(new View.OnClickListener(){
+
+                    @Override
+                    public void onClick(View v) {
+                        Log.e("CLICK:", "NOT IMPLEMENTED YET");
+                        //Todo: Switch to Article View (create article view first)
+                    }
+                });
+            }
+        }
+    }
+
+    private void setImage(ImageView itemImageView, NewsArticle newsArticle) {
+        String imageUrl = newsArticle.getImageUrl();
+        Glide.with(HomeActivity.this).load(imageUrl).into(itemImageView);
     }
 }
 
