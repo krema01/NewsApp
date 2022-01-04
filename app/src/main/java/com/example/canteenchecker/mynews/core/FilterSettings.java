@@ -6,6 +6,8 @@ public class FilterSettings {
     static String countriesFilter;
     static String languagesFilter;
     static String categoriesFilter;
+    static String dateFromFilter;
+    static String dateToFilter;
     static int page;
 
     public static String getCategoriesFilter() {
@@ -20,9 +22,11 @@ public class FilterSettings {
         return languagesFilter;
     }
 
-    public static int getPage() {
-        return page;
-    }
+    public static String getDateFromFilter() { return dateFromFilter; }
+
+    public static String getDateToFilter() { return dateToFilter; }
+
+    public static int getPage() { return page; }
 
     public static void setCategoriesFilter(String categoriesFilter) {
         FilterSettings.categoriesFilter = categoriesFilter;
@@ -39,6 +43,15 @@ public class FilterSettings {
         Log.e("FilterSettings", "Languages: " + languagesFilter);
     }
 
+    public static void setDateFromFilter(String dateFromFilter) {
+        FilterSettings.dateFromFilter = dateFromFilter;
+        Log.e("FilterSettings", "DateFrom: " + dateFromFilter);
+    }
+
+    public static void setDateToFilter(String dateToFilter) {
+        FilterSettings.dateToFilter = dateToFilter;
+        Log.e("FilterSettings", "DateTo: " + dateToFilter);
+    }
     public static void setPage(int page) {
         FilterSettings.page = page;
         Log.e("FilterSettings", "Page: " + page);

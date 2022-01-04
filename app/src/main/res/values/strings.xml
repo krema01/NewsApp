@@ -10,4 +10,7 @@
     <string name="select_language">Sprachen auswählen</string>
     <string name="select_categories">Kategorien auswählen</string>
     <string name="save_filters">Filter speichern</string>
+    <string name="select_to_date">Datum bis</string>
+    <string name="select_from_date">Datum von</string>
+    <string name="delete_filters">Alle Filter löschen</string>
 </resources>

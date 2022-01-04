@@ -188,7 +188,8 @@ public class HomeActivity extends AppCompatActivity {
                                               jsonObject.getString("link"),
                 jsonObject.getString("description"),
                 jsonObject.getString("pubDate"),
-                jsonObject.getString("image_url")
+                jsonObject.getString("image_url"),
+                jsonObject.getString("source_id")
         );
         allArticles.add(article);
     }

@@ -1,6 +1,7 @@
 package com.example.canteenchecker.mynews.ui;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,53 +20,115 @@ import com.example.canteenchecker.mynews.R;
 import com.example.canteenchecker.mynews.core.Constants;
 import com.example.canteenchecker.mynews.core.FilterSettings;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Locale;
 
 public class FilterActivity extends AppCompatActivity {
+    final Calendar myCalendar= Calendar.getInstance();
+
+    //Intent homeIntent = new Intent(FilterActivity.this, HomeActivity.class);
+    //Intent helpIntent = new Intent(FilterActivity.this, HelpActivity.class);
 
     private MenuItem moreFilters;
     private MenuItem help;
 
     private Button saveFiltersButton;
+    private Button deleteFiltersButton;
+    private TextView countriesTextView;
+    private TextView languagesTextView;
+    private TextView categoriesTextView;
+    private TextView fromDateTextView;
+    private TextView toDateTextView;
 
-    // initialize variables
-    TextView countriesTextView;
-    boolean[] selectedCountries;
+    boolean[] selectedCountries = new boolean[Constants.COUNTRIES_AVAILABLE.length];
+    boolean[] selectedLanguages = new boolean[Constants.LANGUAGES_AVAILABLE.length];
+    boolean[] selectedCategories = new boolean[Constants.CATEGORIES_AVAILABLE.length];
+    String selectedFromDate;
+    String selectedToDate;
+
     ArrayList<Integer> countriesList = new ArrayList<>();
-
-    TextView languagesTextView;
-    boolean[] selectedLanguages;
     ArrayList<Integer> languagesList = new ArrayList<>();
-
-    TextView categoriesTextView;
-    boolean[] selectedCategories;
     ArrayList<Integer> categoriesList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
 
-        saveFiltersButton = findViewById(R.id.save_filters_button);
-        saveFiltersButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                updateFilters();
-            }
-        });
-
         // assign variables
+        toDateTextView = findViewById(R.id.to_date_picker);
+        fromDateTextView = findViewById(R.id.from_date_picker);
+        saveFiltersButton = findViewById(R.id.save_filters_button);
+        deleteFiltersButton = findViewById(R.id.delete_filters_button);
         countriesTextView = findViewById(R.id.countries_text_view);
         languagesTextView = findViewById(R.id.languages_text_view);
         categoriesTextView = findViewById(R.id.categories_text_view);
 
-        // initialize selected language array
-        selectedCountries = new boolean[Constants.COUNTRIES_AVAILABLE.length];
-        selectedLanguages = new boolean[Constants.LANGUAGES_AVAILABLE.length];
-        selectedCategories = new boolean[Constants.CATEGORIES_AVAILABLE.length];
+        /*========== Save Filters Button ==========*/
+        saveFiltersButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                updateFilters();
+                Intent homeIntent = new Intent(FilterActivity.this, HomeActivity.class);
+                startActivity(homeIntent);
+            }
+        });
 
+        /*========== Delete Filters Button ==========*/
+        deleteFiltersButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                deleteFilters();
+                Intent homeIntent = new Intent(FilterActivity.this, HomeActivity.class);
+                startActivity(homeIntent);
+            }
+        });
+
+
+        /*========== From Date Picker ==========*/
+        DatePickerDialog.OnDateSetListener dateFrom = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH,month);
+                myCalendar.set(Calendar.DAY_OF_MONTH,day);
+                updateLabelFrom();
+            }
+        };
+        fromDateTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(FilterActivity.this, dateFrom, myCalendar.get(Calendar.YEAR),
+                        myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+        if(FilterSettings.getDateFromFilter() != null) fromDateTextView.setText(FilterSettings.getDateFromFilter());
+
+
+        /*========== To Date Picker ==========*/
+        DatePickerDialog.OnDateSetListener dateTo =new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH,month);
+                myCalendar.set(Calendar.DAY_OF_MONTH,day);
+                updateLabelTo();
+            }
+        };
+        toDateTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(FilterActivity.this, dateTo, myCalendar.get(Calendar.YEAR),
+                        myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+        if(FilterSettings.getDateToFilter() != null) toDateTextView.setText(FilterSettings.getDateToFilter());
+
+        /*========== Countries Picker ==========*/
         countriesTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,7 +137,7 @@ public class FilterActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(FilterActivity.this);
 
                 // set title
-                builder.setTitle("Select Countries");
+                builder.setTitle("Select Countries (max. 5)");
 
                 // set dialog non cancelable
                 builder.setCancelable(false);
@@ -146,6 +210,7 @@ public class FilterActivity extends AppCompatActivity {
         });
         if(FilterSettings.getCountriesFilter() != null) countriesTextView.setText(FilterSettings.getCountriesFilter());
 
+        /*========== Languages Picker ==========*/
         languagesTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -154,7 +219,7 @@ public class FilterActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(FilterActivity.this);
 
                 // set title
-                builder.setTitle("Select Languages");
+                builder.setTitle("Select Languages (max. 5)");
 
                 // set dialog non cancelable
                 builder.setCancelable(false);
@@ -228,6 +293,7 @@ public class FilterActivity extends AppCompatActivity {
         });
         if(FilterSettings.getLanguagesFilter() != null) languagesTextView.setText(FilterSettings.getLanguagesFilter());
 
+        /*========== Categories Picker ==========*/
         categoriesTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -236,7 +302,7 @@ public class FilterActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(FilterActivity.this);
 
                 // set title
-                builder.setTitle("Select Categories");
+                builder.setTitle("Select Categories (max. 5)");
 
                 // set dialog non cancelable
                 builder.setCancelable(false);
@@ -310,6 +376,7 @@ public class FilterActivity extends AppCompatActivity {
         if(FilterSettings.getCategoriesFilter() != null) categoriesTextView.setText(FilterSettings.getCategoriesFilter());
     }
 
+    /*========== Options Menu ==========*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_activity_home_screen, menu);
@@ -331,9 +398,9 @@ public class FilterActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.mniHelp){
-            //Todo: Set Activity to Help Activity
-            Intent intent = new Intent(FilterActivity.this, HelpActivity.class);
-            startActivity(intent);
+            //Todo: Set Activity to Help Activit
+            Intent helpIntent = new Intent(FilterActivity.this, HelpActivity.class);
+            startActivity(helpIntent);
             return true;
         }
         else{
@@ -343,9 +410,31 @@ public class FilterActivity extends AppCompatActivity {
     }
 
 
+    /*========== Helper Functions ==========*/
     private void updateFilters() {
         FilterSettings.setCategoriesFilter(categoriesTextView.getText().toString());
         FilterSettings.setCountriesFilter(countriesTextView.getText().toString());
         FilterSettings.setLanguagesFilter(languagesTextView.getText().toString());
+        FilterSettings.setDateFromFilter(fromDateTextView.getText().toString());
+        FilterSettings.setDateToFilter(toDateTextView.getText().toString());
+    }
+
+    private void deleteFilters() {
+        FilterSettings.setCategoriesFilter(null);
+        FilterSettings.setCountriesFilter(null);
+        FilterSettings.setLanguagesFilter(null);
+        FilterSettings.setDateFromFilter(null);
+        FilterSettings.setDateToFilter(null);
+    }
+
+    private void updateLabelFrom(){
+        String myFormat="MM/dd/yy";
+        SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
+        fromDateTextView.setText(dateFormat.format(myCalendar.getTime()));
+    }
+    private void updateLabelTo(){
+        String myFormat="MM/dd/yy";
+        SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
+        toDateTextView.setText(dateFormat.format(myCalendar.getTime()));
     }
 }

@@ -1,5 +1,6 @@
 package com.example.canteenchecker.mynews.ui;
 
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -37,6 +38,8 @@ public class HelpActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.mniMoreFilters) {
             //Todo: Set Activity to Filters Activity
+            Intent filterIntent = new Intent(HelpActivity.this, FilterActivity.class);
+            startActivity(filterIntent);
             return true;
         } else {
             Toast.makeText(this, "Menu item not available", Toast.LENGTH_SHORT).show();

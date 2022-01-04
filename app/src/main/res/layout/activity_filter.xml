@@ -41,11 +41,40 @@
             android:hint="@string/select_categories"
             android:padding="16dp"/>
 
+        <TextView
+            android:id="@+id/from_date_picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@android:drawable/editbox_background"
+            android:drawableRight="@android:drawable/arrow_down_float"
+            android:drawablePadding="16dp"
+            android:hint="@string/select_from_date"
+            android:padding="16dp"/>
+
+        <TextView
+            android:id="@+id/to_date_picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@android:drawable/editbox_background"
+            android:drawableRight="@android:drawable/arrow_down_float"
+            android:drawablePadding="16dp"
+            android:hint="@string/select_to_date"
+            android:padding="16dp"/>
+
         <Button
             android:id="@+id/save_filters_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/save_filters"
+            android:layout_gravity="end"/>
+
+        <Button
+            android:id="@+id/delete_filters_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_filters"
             android:layout_gravity="end"/>
 
     </LinearLayout>
