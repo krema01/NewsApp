@@ -5,7 +5,8 @@
       <map>
         <entry key="app/src/main/res/layout/activity_filter.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_help.xml" value="0.14635416666666667" />
-        <entry key="app/src/main/res/layout/activity_home.xml" value="0.10126582278481013" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_news_article_details.xml" value="0.3030867353254708" />
         <entry key="app/src/main/res/layout/item_news_article.xml" value="0.2936396994564002" />
         <entry key="app/src/main/res/menu/menu_activity_home_screen.xml" value="0.14635416666666667" />
       </map>

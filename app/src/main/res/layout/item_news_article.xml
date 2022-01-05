@@ -1,11 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/distance_small">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/distance_small">
+
+        <TextView
+            android:id="@+id/itemTitleView"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/itemSourceView"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/distance_small"
+            app:layout_constraintStart_toStartOf="@id/itemTitleView"
+            app:layout_constraintTop_toBottomOf="@id/itemTitleView" />
+
+        <TextView
+            android:id="@+id/itemPublishDateView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/distance_small"
+            app:layout_constraintBaseline_toBaselineOf="@id/itemSourceView"
+            app:layout_constraintStart_toEndOf="@id/itemSourceView" />
+
+
+        <TextView
+            android:id="@+id/itemDescriptionView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/distance_small"
+            app:layout_constraintBottom_toBottomOf="@+id/itemPublishDateView"
+            app:layout_constraintStart_toEndOf="@id/itemPublishDateView"
+            app:layout_constraintTop_toTopOf="@+id/itemPublishDateView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
+
+-->
+
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="@dimen/distance_small">
+    android:layout_margin="@dimen/distance_small"
+    app:cardBackgroundColor="@color/cardview_light_background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,32 +66,37 @@
             android:id="@+id/itemTitleView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/distance_small"
+            android:layout_marginLeft="@dimen/distance_small"
             tools:text="Title"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:layout_marginTop="@dimen/distance_small"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            />
 
         <TextView
             android:id="@+id/itemSourceView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/distance_small"
             tools:text="Source"
-            android:layout_marginTop="@dimen/distance_small"
-            app:layout_constraintTop_toBottomOf="@id/itemTitleView"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 
         <TextView
             android:id="@+id/itemPublishDateView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/distance_small"
             tools:text="Publish date"
-            android:layout_marginStart="@dimen/distance_small"
-            app:layout_constraintBaseline_toBaselineOf="@id/itemSourceView"
-            app:layout_constraintStart_toEndOf="@id/itemSourceView"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemTitleView"
+            />
 
-       <!--><RatingBar
+       <!--
+       <RatingBar
             android:id="@+id/rtbAverageRating"
             style="@style/Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
@@ -50,25 +106,28 @@
             android:layout_marginTop="@dimen/distance_small"
             app:layout_constraintTop_toBottomOf="@id/txvDish"
             app:layout_constraintStart_toStartOf="parent"/>
--->
+        -->
+
         <ImageView
             android:id="@+id/itemImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@id/itemPublishDateView"
-            app:layout_constraintBottom_toTopOf="@id/itemDescriptionView"
-            app:layout_constraintTop_toBottomOf="@id/itemTitleView"
-
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            app:layout_constraintTop_toBottomOf="@id/itemPublishDateView"
+            app:layout_constraintBottom_toTopOf="@id/itemSourceView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:scaleType="fitXY"
+            android:visibility="gone"
             />
-
-        <TextView
-            android:id="@+id/itemDescriptionView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Description"
-            app:layout_constraintTop_toBottomOf="@id/itemSourceView"
-            app:layout_constraintStart_toStartOf="parent"/>
-
+<!--
+                <TextView
+                    android:id="@+id/itemDescriptionView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Description"
+                    app:layout_constraintTop_toBottomOf="@id/itemSourceView"
+                    app:layout_constraintStart_toStartOf="parent"/>
+        -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

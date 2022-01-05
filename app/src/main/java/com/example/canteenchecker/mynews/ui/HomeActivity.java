@@ -2,6 +2,9 @@ package com.example.canteenchecker.mynews.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +23,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -35,8 +39,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -46,9 +52,11 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity {
     private String TAG = getClass().getName();
 
-    private NewsArticleAdapter newsArticleAdapter = new NewsArticleAdapter();
     private MenuItem moreFilters;
     private MenuItem help;
+
+    private NewsArticleAdapter newsArticleAdapter = new NewsArticleAdapter();
+
 
     private SwipeRefreshLayout srlSwipeRefreshLayout;
     EditText keywordSearch;
@@ -61,6 +69,10 @@ public class HomeActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        RecyclerView rcvNews = findViewById(R.id.rcvNews);
+        rcvNews.setLayoutManager(new LinearLayoutManager(this));
+        rcvNews.setAdapter(newsArticleAdapter);
 
         srlSwipeRefreshLayout = findViewById(R.id.srlSwipeRefreshLayout);
         srlSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -155,17 +167,14 @@ public class HomeActivity extends AppCompatActivity {
                             sb.append(line+"\n");
                         }
                         br.close();
-                        Log.e(TAG, "JSON: " + sb.toString());
 
                         String jsonString = sb.toString();
                         JSONObject obj = new JSONObject(jsonString);
                         JSONArray results = obj.getJSONArray("results");
-                        Log.e(TAG, "RESULTS: " + results);
+
                         Gson gson = new Gson();
                         for (int i = 0; i < results.length(); i++){
-                            Log.e(TAG, "RESULT: " + results.getJSONObject(i).toString());
                             addToList(results.getJSONObject(i));
-                            Log.e(TAG, "allArticleCount: " + allArticles.size());
                         }
                     }
                     return allArticles;
@@ -175,7 +184,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(Collection<NewsArticle> newsArticles) {
                 srlSwipeRefreshLayout.setRefreshing(false);
-                Log.e("SHOULD SHOW NOW:", "" + newsArticles.size());
                 newsArticleAdapter.displayNewsArticles(newsArticles);
             }
         }.execute();
@@ -270,10 +278,8 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         void displayNewsArticles(Collection<NewsArticle> newsArticles){
-            Log.e("SHOULD SHOW NOW:", "" + newsArticles.size());
             newsArticleList.clear();
             if(newsArticles != null){
-                Log.e("ADDING:", "" + newsArticles.size());
                 newsArticleList.addAll(newsArticles);
             }
             notifyDataSetChanged();
@@ -284,7 +290,7 @@ public class HomeActivity extends AppCompatActivity {
             private final TextView itemTitleView = itemView.findViewById(R.id.itemTitleView);
             private final TextView itemSourceView = itemView.findViewById(R.id.itemSourceView);
             private final TextView itemPublishDateView = itemView.findViewById(R.id.itemPublishDateView);
-            private final TextView itemDescriptionView = itemView.findViewById(R.id.itemDescriptionView);
+            //private final TextView itemDescriptionView = itemView.findViewById(R.id.itemDescriptionView);
             private final ImageView itemImageView = itemView.findViewById(R.id.itemImageView);
 
             public ViewHolder(@NonNull View itemView) {
@@ -292,10 +298,23 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             void updateView(NewsArticle newsArticle){
+                Log.e("UPDATEVIEW:", newsArticle.getTitle());
+                Log.e("IMAGEURL:", newsArticle.getImageUrl());
                 itemTitleView.setText(newsArticle.getTitle());
                 itemSourceView.setText(newsArticle.getSourceID());
                 itemPublishDateView.setText(newsArticle.getPublishDate());
-                itemDescriptionView.setText(newsArticle.getDescription());
+
+                if(newsArticle.getImageUrl() != null && !newsArticle.getImageUrl().matches("null")
+                        && !newsArticle.getImageUrl().matches("")) {
+                    Log.e("WASNT NULL", newsArticle.getTitle() + " " + newsArticle.getImageUrl());
+                    itemImageView.setImageBitmap(newsArticle.getImageBitmap());
+                    itemImageView.setVisibility(View.VISIBLE);
+                }else {
+                    itemImageView.setVisibility(View.GONE);
+                }
+
+                //itemDescriptionView.setText(newsArticle.getDescription());
+
 
                 //setImage(itemImageView, newsArticle);
 
