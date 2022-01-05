@@ -23,6 +23,10 @@
         </activity>
 
         <activity
+            android:name=".ui.NewsArticleDetailsActivity"
+            android:exported="false"/>
+
+        <activity
             android:name=".ui.FilterActivity"
             android:exported="false"/>
         <activity

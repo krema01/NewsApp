@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <ProgressBar
-        android:id="@+id/viwProgress"
+        android:id="@+id/detailsProgressView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -63,14 +63,15 @@
 
 
             <TextView
+                android:id="@+id/detailsDescriptionView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Description"/>
 
 
             <TextView
-                android:text="www.newsdata.io"
                 android:id="@+id/detailsLinkView"
+                android:text="www.newsdata.io"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:autoLink="web">

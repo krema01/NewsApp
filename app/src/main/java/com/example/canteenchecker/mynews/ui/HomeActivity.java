@@ -39,6 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -56,7 +57,6 @@ public class HomeActivity extends AppCompatActivity {
     private MenuItem help;
 
     private NewsArticleAdapter newsArticleAdapter = new NewsArticleAdapter();
-
 
     private SwipeRefreshLayout srlSwipeRefreshLayout;
     EditText keywordSearch;
@@ -298,35 +298,45 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             void updateView(NewsArticle newsArticle){
-                Log.e("UPDATEVIEW:", newsArticle.getTitle());
-                Log.e("IMAGEURL:", newsArticle.getImageUrl());
+
                 itemTitleView.setText(newsArticle.getTitle());
                 itemSourceView.setText(newsArticle.getSourceID());
                 itemPublishDateView.setText(newsArticle.getPublishDate());
 
                 if(newsArticle.getImageUrl() != null && !newsArticle.getImageUrl().matches("null")
                         && !newsArticle.getImageUrl().matches("")) {
-                    Log.e("WASNT NULL", newsArticle.getTitle() + " " + newsArticle.getImageUrl());
                     itemImageView.setImageBitmap(newsArticle.getImageBitmap());
                     itemImageView.setVisibility(View.VISIBLE);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    newsArticle.getImageBitmap().compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] byteArray = stream.toByteArray();
+                    itemView.setOnClickListener(v -> v.getContext()
+                            .startActivity(NewsArticleDetailsActivity
+                                    .createIntent(v.getContext(), newsArticle.getTitle(),
+                                            byteArray, newsArticle.getPublishDate(),
+                                            newsArticle.getSourceID(), newsArticle.getDescription(),
+                                            newsArticle.getArticleUrl())));
                 }else {
                     itemImageView.setVisibility(View.GONE);
+                    itemView.setOnClickListener(v -> v.getContext()
+                            .startActivity(NewsArticleDetailsActivity
+                                    .createIntent(v.getContext(), newsArticle.getTitle(),
+                                            newsArticle.getPublishDate(),
+                                            newsArticle.getSourceID(), newsArticle.getDescription(),
+                                            newsArticle.getArticleUrl())));
                 }
 
-                //itemDescriptionView.setText(newsArticle.getDescription());
-
-
-                //setImage(itemImageView, newsArticle);
-
-
-                itemView.setOnClickListener(new View.OnClickListener(){
-
-                    @Override
-                    public void onClick(View v) {
-                        Log.e("CLICK:", "NOT IMPLEMENTED YET");
-                        //Todo: Switch to Article View (create article view first)
-                    }
-                });
+                //itemView.setOnClickListener(new View.OnClickListener(){
+//
+                //    @Override
+                //    public void onClick(View v) {
+                //        Log.e("CLICK:", "NOT IMPLEMENTED YET");
+                //        //detailsIntent.putExtra("message", message);
+                //        //startActivity(intent);
+//
+                //        //Todo: Switch to Article View (create article view first)
+                //    }
+                //});
             }
         }
     }
