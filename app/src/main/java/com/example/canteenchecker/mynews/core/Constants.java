@@ -6,6 +6,8 @@ public class Constants {
     public static final String API = "pub_3299d32b8b154373c88df9cbebb156b295d3";
     public static final String AND = "&";
 
+    public static final String COPYRIGHT = "\u00a9";
+
     public static final String[] COUNTRIES_AVAILABLE = {
             "Argentina", "Australia", "Austria", "Belgium",
             "Brazil", "Bulgaria", "Canada", "China", "Colombia",

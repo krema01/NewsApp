@@ -15,14 +15,16 @@ public class NewsArticle {
     String imageUrl;
     Bitmap imageBitmap;
     String sourceID;
+    String fullDescription;
 
-    public NewsArticle(String title, String articleUrl, String description, String publishDate, String imageUrl, String sourceID){
+    public NewsArticle(String title, String articleUrl, String description, String publishDate, String imageUrl, String sourceID, String fullDescription){
         this.title = title;
         this.articleUrl = articleUrl;
         this.description = description;
         this.publishDate = publishDate;
         this.imageUrl = imageUrl;
         this.sourceID = sourceID;
+        this.fullDescription = fullDescription;
 
         if(imageUrl != null){
             try {
@@ -50,6 +52,7 @@ public class NewsArticle {
         return imageUrl;
     }
     public String getSourceID() { return sourceID; }
+    public String getFullDescription() { return fullDescription; }
 
     public Bitmap getImageBitmap() { return imageBitmap; }
 }

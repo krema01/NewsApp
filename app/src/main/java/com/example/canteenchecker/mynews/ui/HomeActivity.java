@@ -246,12 +246,15 @@ public class HomeActivity extends AppCompatActivity {
         //Log.e(TAG, "PublishDate: " + jsonObject.getString("pubDate"));
         //Log.e(TAG, "ImageURL: " + jsonObject.getString("image_url"));
         //Log.e(TAG, "Description: " + jsonObject.getString("description"));
+        String fullDescription = "";
+        if(jsonObject.has("full_description")) fullDescription = jsonObject.getString("full_description");
         NewsArticle article = new NewsArticle(jsonObject.getString("title"),
                                               jsonObject.getString("link"),
                 jsonObject.getString("description"),
                 jsonObject.getString("pubDate"),
                 jsonObject.getString("image_url"),
-                jsonObject.getString("source_id")
+                jsonObject.getString("source_id"),
+                fullDescription
         );
         allArticles.add(article);
     }
@@ -300,31 +303,32 @@ public class HomeActivity extends AppCompatActivity {
             void updateView(NewsArticle newsArticle){
 
                 itemTitleView.setText(newsArticle.getTitle());
-                itemSourceView.setText(newsArticle.getSourceID());
+                itemSourceView.setText(Constants.COPYRIGHT + newsArticle.getSourceID());
                 itemPublishDateView.setText(newsArticle.getPublishDate());
 
                 if(newsArticle.getImageUrl() != null && !newsArticle.getImageUrl().matches("null")
                         && !newsArticle.getImageUrl().matches("")) {
                     itemImageView.setImageBitmap(newsArticle.getImageBitmap());
                     itemImageView.setVisibility(View.VISIBLE);
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    newsArticle.getImageBitmap().compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    byte[] byteArray = stream.toByteArray();
-                    itemView.setOnClickListener(v -> v.getContext()
-                            .startActivity(NewsArticleDetailsActivity
-                                    .createIntent(v.getContext(), newsArticle.getTitle(),
-                                            byteArray, newsArticle.getPublishDate(),
-                                            newsArticle.getSourceID(), newsArticle.getDescription(),
-                                            newsArticle.getArticleUrl())));
+
                 }else {
                     itemImageView.setVisibility(View.GONE);
-                    itemView.setOnClickListener(v -> v.getContext()
-                            .startActivity(NewsArticleDetailsActivity
-                                    .createIntent(v.getContext(), newsArticle.getTitle(),
-                                            newsArticle.getPublishDate(),
-                                            newsArticle.getSourceID(), newsArticle.getDescription(),
-                                            newsArticle.getArticleUrl())));
+                    //itemView.setOnClickListener(v -> v.getContext()
+                    //        .startActivity(NewsArticleDetailsActivity
+                    //                .createIntent(v.getContext(), newsArticle.getTitle(),
+                    //                        newsArticle.getPublishDate(),
+                    //                        newsArticle.getSourceID(), newsArticle.getDescription(),
+                    //                        newsArticle.getArticleUrl())));
                 }
+                //ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                //newsArticle.getImageBitmap().compress(Bitmap.CompressFormat.PNG, 100, stream);
+                //byte[] byteArray = stream.toByteArray();
+                itemView.setOnClickListener(v -> v.getContext()
+                        .startActivity(NewsArticleDetailsActivity
+                                .createIntent(v.getContext(), newsArticle.getTitle(),
+                                        newsArticle.getImageUrl(), newsArticle.getPublishDate(),
+                                        newsArticle.getSourceID(), newsArticle.getDescription(),
+                                        newsArticle.getArticleUrl(), newsArticle.getFullDescription())));
 
                 //itemView.setOnClickListener(new View.OnClickListener(){
 //

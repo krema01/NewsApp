@@ -21,31 +21,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/distance_medium">
+            android:padding="@dimen/distance_small">
 
-            <ImageView
-                android:id="@+id/detailsImage"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                />
+
 
             <TextView
                 android:id="@+id/detailsTitleView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Title"/>
+                style="@style/TextAppearance.MaterialComponents.Headline4"
+                android:text="Title"
+                android:padding="@dimen/distance_small"/>
 
+            <ImageView
+                android:id="@+id/detailsImage"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="200dp"
+                android:visibility="visible"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/distance_small">
 
                 <TextView
                     android:id="@+id/detailsPublishDateView"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    style="@style/TextAppearance.MaterialComponents.Overline"
                     android:text="Published on: "
                     android:layout_weight="0.5"
                     />
@@ -54,6 +60,7 @@
                     android:id="@+id/detailsSourceView"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    style="@style/TextAppearance.MaterialComponents.Overline"
                     android:text="Published by: "
                     android:layout_weight="0.5"
                     android:textAlignment="viewEnd"
@@ -66,7 +73,17 @@
                 android:id="@+id/detailsDescriptionView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Description"/>
+                style="@style/TextAppearance.AppCompat.Body2"
+                android:text="Description"
+                android:padding="@dimen/distance_small"/>
+
+            <TextView
+                android:id="@+id/detailsFullDescriptionView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:text="Full Description"
+                android:padding="@dimen/distance_small"/>
 
 
             <TextView
@@ -74,7 +91,8 @@
                 android:text="www.newsdata.io"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:autoLink="web">
+                android:autoLink="web"
+                android:padding="@dimen/distance_small">
             </TextView>
 
 
