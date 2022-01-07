@@ -33,7 +33,13 @@
         <activity
             android:name=".ui.CountriesActivity"
             android:exported="false"/>
-
+        <activity
+            android:name=".ui.LanguagesActivity"
+            android:exported="false"/>
+        <!--<activity
+            android:name=".ui.CategoriesActivity"
+            android:exported="false"/>
+-->
 
         <activity
             android:name=".ui.HelpActivity"

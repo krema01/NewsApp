@@ -48,9 +48,9 @@ public class FilterActivity extends AppCompatActivity {
     private TextView fromDateTextView;
     private TextView toDateTextView;
 
-    boolean[] selectedCountries = new boolean[Constants.COUNTRIES_AVAILABLE.length];
-    boolean[] selectedLanguages = new boolean[Constants.LANGUAGES_AVAILABLE.length];
-    boolean[] selectedCategories = new boolean[Constants.CATEGORIES_AVAILABLE.length];
+    //boolean[] selectedCountries = new boolean[Constants.COUNTRIES_AVAILABLE.length];
+    //boolean[] selectedLanguages = new boolean[Constants.LANGUAGES_AVAILABLE.length];
+    boolean[] selectedCategories = new boolean[Constants.CATEGORIES.length];
     String selectedFromDate;
     String selectedToDate;
 
@@ -67,8 +67,8 @@ public class FilterActivity extends AppCompatActivity {
         // assign variables
         toDateTextView = findViewById(R.id.to_date_picker);
         fromDateTextView = findViewById(R.id.from_date_picker);
-        saveFiltersButton = findViewById(R.id.save_filters_button);
-        deleteFiltersButton = findViewById(R.id.delete_filters_button);
+        saveFiltersButton = findViewById(R.id.save_countries_button);
+        deleteFiltersButton = findViewById(R.id.delete_countries_button);
         countriesTextView = findViewById(R.id.countries_text_view);
         languagesTextView = findViewById(R.id.languages_text_view);
         categoriesTextView = findViewById(R.id.categories_text_view);
@@ -142,7 +142,7 @@ public class FilterActivity extends AppCompatActivity {
         });
         if(FilterSettings.getDateToFilter() != null) toDateTextView.setText(FilterSettings.getDateToFilter());
 
-        /*========== Countries Picker ==========*/
+        /*========== Countries Picker ==========
         countriesTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -224,7 +224,7 @@ public class FilterActivity extends AppCompatActivity {
         });
         if(FilterSettings.getCountriesFilter() != null) countriesTextView.setText(FilterSettings.getCountriesFilter());
 
-        /*========== Languages Picker ==========*/
+        /*========== Languages Picker ==========
         languagesTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -306,7 +306,7 @@ public class FilterActivity extends AppCompatActivity {
             }
         });
         if(FilterSettings.getLanguagesFilter() != null) languagesTextView.setText(FilterSettings.getLanguagesFilter());
-
+*/
         /*========== Categories Picker ==========*/
         categoriesTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -321,7 +321,7 @@ public class FilterActivity extends AppCompatActivity {
                 // set dialog non cancelable
                 builder.setCancelable(false);
 
-                builder.setMultiChoiceItems(Constants.CATEGORIES_AVAILABLE, selectedCategories, new DialogInterface.OnMultiChoiceClickListener() {
+                builder.setMultiChoiceItems(Constants.CATEGORIES, selectedCategories, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i, boolean b) {
                         // check condition
@@ -348,7 +348,7 @@ public class FilterActivity extends AppCompatActivity {
                         // use for loop
                         for (int j = 0; j < categoriesList.size(); j++) {
                             // concat array value
-                            stringBuilder.append(Constants.CATEGORIES_AVAILABLE[categoriesList.get(j)].toLowerCase());
+                            stringBuilder.append(Constants.CATEGORIES[categoriesList.get(j)].toLowerCase());
                             // check condition
                             if (j != categoriesList.size() - 1) {
                                 // When j value  not equal

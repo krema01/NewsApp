@@ -5,19 +5,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
-        android:id="@+id/countriesTitleLayout"
+        android:id="@+id/languagesTitleLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="5"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/countriesScrollView"
+        app:layout_constraintBottom_toTopOf="@id/languagesScrollView"
         android:background="#a3a3a3">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Pick countries"
+            android:text="Pick languages"
             style="@style/TextAppearance.MaterialComponents.Headline4"
             android:layout_weight="4"/>
         <TextView
@@ -29,16 +29,16 @@
     </LinearLayout>
 
     <ScrollView
-        android:id="@+id/countriesScrollView"
+        android:id="@+id/languagesScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/countriesTitleLayout"
+        app:layout_constraintTop_toBottomOf="@id/languagesTitleLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/countriesButtonLayout">
+        app:layout_constraintBottom_toTopOf="@id/languagesButtonLayout">
 
         <LinearLayout
-            android:id="@+id/countriesFilterLayout"
+            android:id="@+id/LanguagesFilterLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -47,16 +47,16 @@
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/countriesButtonLayout"
+        android:id="@+id/languagesButtonLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="#a3a3a3"
-        app:layout_constraintTop_toBottomOf="@id/countriesScrollView"
+        app:layout_constraintTop_toBottomOf="@id/languagesScrollView"
         app:layout_constraintBottom_toBottomOf="parent"
         android:weightSum="2">
         <Button
-            android:id="@+id/save_countries_button"
+            android:id="@+id/save_languages_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/save_filters"
@@ -64,7 +64,7 @@
             />
 
         <Button
-            android:id="@+id/delete_countries_button"
+            android:id="@+id/delete_languages_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/delete_filters"
