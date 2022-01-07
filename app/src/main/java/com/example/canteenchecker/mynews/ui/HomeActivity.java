@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -48,6 +49,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -92,6 +94,10 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         keywordSearch = findViewById(R.id.edtKeywordSearch);
+        String countryCodeValue = Locale.getDefault().getCountry().toLowerCase();
+        Log.e("COUNTRYCODE:", " = " + countryCodeValue);
+        //FilterSettings.setCountriesFilter(countryCodeValue);
+        //updateNews();
     }
 
     /*========== Options Menu ==========*/
