@@ -35,8 +35,13 @@ public class FilterActivity extends AppCompatActivity {
     private MenuItem moreFilters;
     private MenuItem help;
 
+
+
     private Button saveFiltersButton;
     private Button deleteFiltersButton;
+
+
+    //Old
     private TextView countriesTextView;
     private TextView languagesTextView;
     private TextView categoriesTextView;
@@ -68,13 +73,22 @@ public class FilterActivity extends AppCompatActivity {
         languagesTextView = findViewById(R.id.languages_text_view);
         categoriesTextView = findViewById(R.id.categories_text_view);
 
+
+        findViewById(R.id.countries_filter_button).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FilterActivity.this, CountriesActivity.class);
+                startActivity(intent);
+            }
+        });
+
         /*========== Save Filters Button ==========*/
         saveFiltersButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 updateFilters();
-                Intent homeIntent = new Intent(FilterActivity.this, HomeActivity.class);
-                startActivity(homeIntent);
+                Intent intent = new Intent(FilterActivity.this, HomeActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -375,6 +389,7 @@ public class FilterActivity extends AppCompatActivity {
         });
         if(FilterSettings.getCategoriesFilter() != null) categoriesTextView.setText(FilterSettings.getCategoriesFilter());
     }
+
 
     /*========== Options Menu ==========*/
     @Override

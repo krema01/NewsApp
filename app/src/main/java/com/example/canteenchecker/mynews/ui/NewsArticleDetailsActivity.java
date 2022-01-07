@@ -111,8 +111,10 @@ public class NewsArticleDetailsActivity extends AppCompatActivity {
         detailsLinkView.setText(link);
 
         Log.e("DESCRIPTION: ", description);
+        if(description == null || description.matches("null") || description.matches("")) detailsDescriptionView.setVisibility(View.GONE);
+
         Log.e("FULL DESCRIPTION: ", fullDescription);
-        if(fullDescription == null || fullDescription.matches("null")) detailsFullDescriptionView.setVisibility(View.GONE);
+        if(fullDescription == null || fullDescription.matches("null") || fullDescription.matches("")) detailsFullDescriptionView.setVisibility(View.GONE);
         if(image != null && !image.matches("null") && !image.matches("")){
             new DownloadImageTask(detailsImageView).execute(image);
         }
