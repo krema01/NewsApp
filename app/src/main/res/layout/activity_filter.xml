@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#408c5930">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -23,7 +24,8 @@
                 android:layout_margin="@dimen/distance_small"
                 android:orientation="horizontal"
                 android:background="#878787"
-                android:weightSum="5">
+                android:weightSum="5"
+                android:backgroundTint="#4D8c5930">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -49,7 +51,8 @@
                 android:layout_margin="@dimen/distance_small"
                 android:background="#878787"
                 android:orientation="horizontal"
-                android:weightSum="5">
+                android:weightSum="5"
+                android:backgroundTint="#4D8c5930">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -75,7 +78,8 @@
                 android:layout_margin="@dimen/distance_small"
                 android:background="#878787"
                 android:orientation="horizontal"
-                android:weightSum="5">
+                android:weightSum="5"
+                android:backgroundTint="#4D8c5930">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -101,7 +105,8 @@
                 android:layout_margin="@dimen/distance_small"
                 android:background="#878787"
                 android:orientation="horizontal"
-                android:weightSum="5">
+                android:weightSum="5"
+                android:backgroundTint="#4D8c5930">
 
                 <ImageView
                     android:layout_width="match_parent"

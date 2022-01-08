@@ -69,7 +69,7 @@ public class HomeActivity extends AppCompatActivity {
     EditText keywordSearch;
     Button btnSearch;
 
-    public Collection<NewsArticle> allArticles = new ArrayList<NewsArticle>();
+    public static Collection<NewsArticle> allArticles = new ArrayList<NewsArticle>();
     public static String lastKeyword;
 
 
@@ -117,6 +117,7 @@ public class HomeActivity extends AppCompatActivity {
             keywordSearch.setText(getIntent().getStringExtra(FILTER_KEYWORD));
         }
 
+        //showNews();
         //updateNews();
         firstInit = false;
     }
@@ -162,6 +163,13 @@ public class HomeActivity extends AppCompatActivity {
 
 
     /*========== Helper Functions ==========*/
+
+    private void showNews() {
+        if(allArticles.size() > 0)
+            newsArticleAdapter.displayNewsArticles(allArticles);
+        else updateNews();
+    }
+
     @SuppressLint("StaticFieldLeak")
     private void updateNews() {
         srlSwipeRefreshLayout.setRefreshing(true);
