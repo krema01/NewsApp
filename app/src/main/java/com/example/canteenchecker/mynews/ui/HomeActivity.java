@@ -1,6 +1,7 @@
 package com.example.canteenchecker.mynews.ui;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -55,6 +56,10 @@ import java.util.Locale;
 public class HomeActivity extends AppCompatActivity {
     private String TAG = getClass().getName();
 
+    private static boolean firstInit = true;
+
+    private static final String FILTER_KEYWORD = "keyword";
+
     private MenuItem moreFilters;
     private MenuItem help;
 
@@ -65,7 +70,15 @@ public class HomeActivity extends AppCompatActivity {
     Button btnSearch;
 
     public Collection<NewsArticle> allArticles = new ArrayList<NewsArticle>();
-    private String lastKeyword;
+    public static String lastKeyword;
+
+
+    public static Intent createIntent(Context context, String keyword) {
+        Log.e("REACHED HomeActivityView: ", "HURRAY");
+        Intent intent = new Intent(context, HomeActivity.class);
+        intent.putExtra(FILTER_KEYWORD, keyword);
+        return intent;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -94,10 +107,18 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         keywordSearch = findViewById(R.id.edtKeywordSearch);
-        String countryCodeValue = Locale.getDefault().getCountry().toLowerCase();
-        Log.e("COUNTRYCODE:", " = " + countryCodeValue);
-        //FilterSettings.setCountriesFilter(countryCodeValue);
+
+        if(firstInit) {
+            String countryCodeValue = Locale.getDefault().getCountry().toLowerCase();
+            Log.e("COUNTRYCODE:", " = " + countryCodeValue);
+            FilterSettings.setCountriesFilter("country=" + countryCodeValue);
+        }
+        else{
+            keywordSearch.setText(getIntent().getStringExtra(FILTER_KEYWORD));
+        }
+
         //updateNews();
+        firstInit = false;
     }
 
     /*========== Options Menu ==========*/
@@ -211,15 +232,7 @@ public class HomeActivity extends AppCompatActivity {
             sb.append(Constants.AND);
             sb.append(FilterSettings.getLanguagesFilter());
         }
-        if(FilterSettings.getDateFromFilter() != "" && FilterSettings.getDateFromFilter() != null){
-            sb.append(Constants.AND);
-            sb.append(FilterSettings.getDateFromFilter());
-        }
-        if(FilterSettings.getDateToFilter() != "" && FilterSettings.getDateToFilter() != null){
-            sb.append(Constants.AND);
-            sb.append(FilterSettings.getDateToFilter());
-        }
-        if(keywordSearch.getText().toString() != null && !keywordSearch.getText().toString().matches("")){
+        if(!keywordSearch.getText().toString().matches("")){
             String keywordString = parseKeywords();
             if(keywordString != lastKeyword){
                 FilterSettings.setPage(0);
@@ -230,7 +243,8 @@ public class HomeActivity extends AppCompatActivity {
         }
         if(FilterSettings.getPage() > 0){
             sb.append(Constants.AND);
-            sb.append("page=" + FilterSettings.getPage());
+            sb.append("page=");
+            sb.append(FilterSettings.getPage());
         }
 
         return sb.toString();
@@ -247,11 +261,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void addToList(JSONObject jsonObject) throws JSONException {
-        //Log.e(TAG, "Title: " + jsonObject.getString("title"));
-        //Log.e(TAG, "Link: " + jsonObject.getString("link"));
-        //Log.e(TAG, "PublishDate: " + jsonObject.getString("pubDate"));
-        //Log.e(TAG, "ImageURL: " + jsonObject.getString("image_url"));
-        //Log.e(TAG, "Description: " + jsonObject.getString("description"));
         String fullDescription = "";
         if(jsonObject.has("full_description")) fullDescription = jsonObject.getString("full_description");
         NewsArticle article = new NewsArticle(jsonObject.getString("title"),

@@ -10,7 +10,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
@@ -92,7 +92,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/date_filter_button"
+                android:id="@+id/help_button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 app:layout_constraintTop_toBottomOf="@id/categories_filter_button"
@@ -106,17 +106,43 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:src="@drawable/baseline_date_range_black_48dp"
+                    android:src="@drawable/baseline_help_black_48dp"
                     android:layout_weight="4"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:text="@string/select_dates"
+                    android:text="@string/open_help"
                     android:layout_weight="1"
                     android:gravity="center"/>
 
             </LinearLayout>
 
+            <EditText
+                android:id="@+id/filtersKeyword"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_filter"
+                android:inputType="textFilter"
+                android:layout_margin="@dimen/distance_small"
+                app:layout_constraintEnd_toStartOf="@+id/filtersSearchButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/help_button"/>
+
+            <Button
+                android:id="@+id/filtersSearchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_search"
+                android:layout_margin="@dimen/distance_small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/help_button"
+                app:layout_constraintStart_toEndOf="@id/filtersKeyword"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+
+
 </FrameLayout>

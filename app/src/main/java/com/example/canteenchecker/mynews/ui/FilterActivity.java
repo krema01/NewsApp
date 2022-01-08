@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,13 +71,26 @@ public class FilterActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.date_filter_button).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.help_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FilterActivity.this, DatesActivity.class);
+                Intent intent = new Intent(FilterActivity.this, HelpActivity.class);
                 startActivity(intent);
             }
         });
+
+        findViewById(R.id.filtersSearchButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText keywordView = findViewById(R.id.filtersKeyword);
+
+                v.getContext().startActivity(HomeActivity
+                        .createIntent(v.getContext(), keywordView.getText().toString()));
+            }
+        });
+
+        EditText keywordTextView = findViewById(R.id.filtersKeyword);
+        keywordTextView.setText(HomeActivity.lastKeyword);
     }
 
 

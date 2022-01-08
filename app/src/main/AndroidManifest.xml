@@ -39,9 +39,6 @@
         <activity
             android:name=".ui.CategoriesActivity"
             android:exported="false"/>
-        <activity
-            android:name=".ui.DatesActivity"
-            android:exported="false"/>
 
 
         <activity
