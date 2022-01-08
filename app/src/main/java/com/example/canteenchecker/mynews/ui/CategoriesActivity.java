@@ -20,41 +20,42 @@ import com.example.canteenchecker.mynews.core.FilterSettings;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class LanguagesActivity extends AppCompatActivity {
+public class CategoriesActivity extends AppCompatActivity {
 
-    static ArrayList<String> selectedLanguages = new ArrayList<String>();
+    static ArrayList<String> selectedCategories = new ArrayList<String>();
     LinearLayout layout;
     Button saveButton, deleteButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_languages);
+        setContentView(R.layout.activity_categories);
 
-        layout = findViewById(R.id.languagesFilterLayout);
+        layout = findViewById(R.id.categoriesFilterLayout);
 
         restoreFilters();
-        setLanguages();
+        setCategories();
 
         setButtons();
 
     }
 
     private void restoreFilters() {
-        selectedLanguages = (ArrayList) FilterSettings.getLanguagesFullName();
+        selectedCategories = (ArrayList) FilterSettings.getCategoriesFullName();
+        Log.e("SelectedCategories: ", "Categories: " + selectedCategories.toString());
     }
 
 
-    private void setLanguages() {
-        for(Map.Entry<String,String> entry : Constants.LANGUAGES.entrySet()){
+    private void setCategories() {
+        for(int i = 0; i < Constants.CATEGORIES.length; ++i){
             TextView textView = new TextView(this);
-            textView.setText(entry.getKey());
+            textView.setText(Constants.CATEGORIES[i]);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             params.setMargins(10,10,10,10);
             textView.setLayoutParams(params);
             textView.setTextSize(25);
-            if(selectedLanguages != null) {
-                if (selectedLanguages.contains(entry.getKey()))
+            if(selectedCategories != null) {
+                if (selectedCategories.contains(Constants.CATEGORIES[i]))
                     textView.setBackgroundColor(Color.parseColor("#a3a3a3"));
             }
             else
@@ -63,24 +64,24 @@ public class LanguagesActivity extends AppCompatActivity {
             textView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    String selectedLanguage = textView.getText().toString();
-                    if (selectedLanguages != null && selectedLanguages.contains(selectedLanguage)) {
-                        Log.e("ALREADY SELECTED", selectedLanguage);
-                        //Language already selected.. unselect
-                        selectedLanguages.remove(selectedLanguage);
+                    String selectedCategory = textView.getText().toString();
+                    if (selectedCategories != null && selectedCategories.contains(selectedCategory)) {
+                        Log.e("ALREADY SELECTED", selectedCategory);
+                        //Category already selected.. unselect
+                        selectedCategories.remove(selectedCategory);
                         textView.setBackgroundColor(Color.parseColor("#ffffff"));
                     }
 
                     else{
-                        Log.e("NOT SELECTED YET", selectedLanguage);
-                        if(selectedLanguages != null && selectedLanguages.size() < 5) {
-                            //select language
-                            selectedLanguages.add(selectedLanguage);
+                        Log.e("NOT SELECTED YET", selectedCategory);
+                        if(selectedCategories != null && selectedCategories.size() < 5) {
+                            //select category
+                            selectedCategories.add(selectedCategory);
                             textView.setBackgroundColor(Color.parseColor("#a3a3a3"));
                         }
                         else {
                             Toast.makeText(getApplicationContext(),
-                                    "Please unselect another language first!\nYou have already selected 5 languages.",
+                                    "Please unselect another category first!\nYou have already selected 5 categories.",
                                     Toast.LENGTH_SHORT)
                                     .show();
                         }
@@ -93,49 +94,51 @@ public class LanguagesActivity extends AppCompatActivity {
 
     private void setButtons() {
         //Button saveButton
-        saveButton = findViewById(R.id.save_languages_button);
+        saveButton = findViewById(R.id.save_categories_button);
         saveButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if(selectedLanguages.size() > 0){
-                    StringBuilder languageShortSb = new StringBuilder();
-                    ArrayList<String> languageLong = new ArrayList<>();
-                    languageShortSb.append("language=");
+                if(selectedCategories.size() > 0){
+                    StringBuilder categoryShortSb = new StringBuilder();
+                    ArrayList<String> categoryLong = new ArrayList<>();
+                    categoryShortSb.append("category=");
                     int i = 0;
-                    for(String language : selectedLanguages){
-                        languageShortSb.append(Constants.LANGUAGES.get(language));
-                        languageLong.add(language);
-                        if (i != selectedLanguages.size() - 1) {
-                            languageShortSb.append(",");
+                    for(String category : selectedCategories){
+                        categoryShortSb.append(category);
+                        categoryLong.add(category);
+                        if (i != selectedCategories.size() - 1) {
+                            categoryShortSb.append(",");
                         }
                         ++i;
                     }
-                    FilterSettings.setLanguagesFilter(languageShortSb.toString());
-                    FilterSettings.setLanguagesFullName(languageLong);
+                    FilterSettings.setCategoriesFilter(categoryShortSb.toString());
+                    FilterSettings.setCategoriesFullName(categoryLong);
                 }else {
-                    FilterSettings.setCountriesFilter("");
-                    FilterSettings.setCountriesFullName(null);
+                    FilterSettings.setCategoriesFilter("");
+                    FilterSettings.setCategoriesFullName(null);
                 }
-                Intent intent = new Intent(LanguagesActivity.this, FilterActivity.class);
+                Intent intent = new Intent(CategoriesActivity.this, FilterActivity.class);
                 startActivity(intent);
             }
         });
 
         //Button deleteButton
-        deleteButton = findViewById(R.id.delete_languages_button);
+        deleteButton = findViewById(R.id.delete_categories_button);
         deleteButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 for(int i = 0; i < layout.getChildCount(); ++i){
                     layout.getChildAt(i).setBackgroundColor(Color.parseColor("#ffffff"));
                 }
-                selectedLanguages.clear();
-                FilterSettings.setLanguagesFilter("");
-                FilterSettings.setLanguagesFullName(null);
+                selectedCategories.clear();
+                FilterSettings.setCategoriesFilter("");
+                FilterSettings.setCategoriesFullName(null);
 
-                Intent intent = new Intent(LanguagesActivity.this, FilterActivity.class);
+                Intent intent = new Intent(CategoriesActivity.this, FilterActivity.class);
                 startActivity(intent);
             }
         });
+
     }
+
 }

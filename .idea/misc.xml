@@ -5,6 +5,7 @@
       <map>
         <entry key="app/src/main/res/drawable/baseline_language_black_24dp.xml" value="0.2578125" />
         <entry key="app/src/main/res/drawable/baseline_location_on_black_24dp.xml" value="0.2578125" />
+        <entry key="app/src/main/res/layout/activity_categories.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_countries.xml" value="0.1017901924813352" />
         <entry key="app/src/main/res/layout/activity_filter.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_help.xml" value="0.14635416666666667" />

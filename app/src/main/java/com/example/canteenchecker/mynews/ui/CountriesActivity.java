@@ -1,5 +1,6 @@
 package com.example.canteenchecker.mynews.ui;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,7 @@ import com.example.canteenchecker.mynews.core.Constants;
 import com.example.canteenchecker.mynews.core.FilterSettings;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class CountriesActivity extends AppCompatActivity {
@@ -31,12 +33,16 @@ public class CountriesActivity extends AppCompatActivity {
 
         layout = findViewById(R.id.countriesFilterLayout);
 
+        restoreFilters();
         setCountries();
 
         setButtons();
 
     }
 
+    private void restoreFilters() {
+        selectedCountries = (ArrayList)FilterSettings.getCountriesFullName();
+    }
 
 
     private void setCountries() {
@@ -47,22 +53,27 @@ public class CountriesActivity extends AppCompatActivity {
             params.setMargins(10,10,10,10);
             textView.setLayoutParams(params);
             textView.setTextSize(25);
-
-            textView.setBackgroundColor(Color.parseColor("#ffffff"));
+            if(selectedCountries != null) {
+                if (selectedCountries.contains(entry.getKey()))
+                    textView.setBackgroundColor(Color.parseColor("#a3a3a3"));
+            }
+            else
+                textView.setBackgroundColor(Color.parseColor("#ffffff"));
 
             textView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     String selectedCountry = textView.getText().toString();
-                    if(selectedCountries.contains(selectedCountry)){
+                    if (selectedCountries != null && selectedCountries.contains(selectedCountry)) {
                         Log.e("ALREADY SELECTED", selectedCountry);
                         //Country already selected.. unselect
                         selectedCountries.remove(selectedCountry);
                         textView.setBackgroundColor(Color.parseColor("#ffffff"));
                     }
+
                     else{
                         Log.e("NOT SELECTED YET", selectedCountry);
-                        if(selectedCountries.size() < 5) {
+                        if(selectedCountries != null && selectedCountries.size() < 5) {
                             //select country
                             selectedCountries.add(selectedCountry);
                             textView.setBackgroundColor(Color.parseColor("#a3a3a3"));
@@ -87,18 +98,26 @@ public class CountriesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(selectedCountries.size() > 0){
-                    StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.append("country=");
+                    StringBuilder countryShortSb = new StringBuilder();
+                    ArrayList<String> countryLong = new ArrayList<>();
+                    countryShortSb.append("country=");
                     int i = 0;
                     for(String country : selectedCountries){
-                        stringBuilder.append(Constants.COUNTRIES.get(country));
+                        countryShortSb.append(Constants.COUNTRIES.get(country));
+                        countryLong.add(country);
                         if (i != selectedCountries.size() - 1) {
-                            stringBuilder.append(",");
+                            countryShortSb.append(",");
                         }
                         ++i;
                     }
-                    FilterSettings.setCountriesFilter(stringBuilder.toString());
+                    FilterSettings.setCountriesFilter(countryShortSb.toString());
+                    FilterSettings.setCountriesFullName(countryLong);
+                }else {
+                    FilterSettings.setCountriesFilter("");
+                    FilterSettings.setCountriesFullName(null);
                 }
+                Intent intent = new Intent(CountriesActivity.this, FilterActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -111,6 +130,11 @@ public class CountriesActivity extends AppCompatActivity {
                     layout.getChildAt(i).setBackgroundColor(Color.parseColor("#ffffff"));
                 }
                 selectedCountries.clear();
+                FilterSettings.setCountriesFilter("");
+                FilterSettings.setCountriesFullName(null);
+
+                Intent intent = new Intent(CountriesActivity.this, FilterActivity.class);
+                startActivity(intent);
             }
         });
 

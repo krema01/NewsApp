@@ -60,6 +60,12 @@ public class FilterActivity extends AppCompatActivity {
 
 
     @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(FilterActivity.this, HomeActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
@@ -74,10 +80,27 @@ public class FilterActivity extends AppCompatActivity {
         categoriesTextView = findViewById(R.id.categories_text_view);
 
 
+
         findViewById(R.id.countries_filter_button).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(FilterActivity.this, CountriesActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.languages_filter_button).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FilterActivity.this, LanguagesActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.categories_filter_button).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FilterActivity.this, CategoriesActivity.class);
                 startActivity(intent);
             }
         });

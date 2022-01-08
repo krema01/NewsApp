@@ -1,6 +1,7 @@
 package com.example.canteenchecker.mynews.core;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Constants {
@@ -11,7 +12,7 @@ public class Constants {
 
     public static final String COPYRIGHT = "\u00a9";
 
-    public static final Map<String, String> COUNTRIES = new HashMap<String, String>()
+    public static final Map<String, String> COUNTRIES = new LinkedHashMap<String, String>()
     {
         {
             put("Argentina", "ar");
@@ -101,7 +102,7 @@ public class Constants {
     //};
 
 
-    public static final Map<String, String> LANGUAGES = new HashMap<String, String>(){
+    public static final Map<String, String> LANGUAGES = new LinkedHashMap<String, String>(){
         {
             put("Arabic", "ar");
             put("Bosnian", "bs");
@@ -156,7 +157,7 @@ public class Constants {
 
     public static final String[] CATEGORIES = {
             "Business", "Entertainment", "Environment", "Food", "Health",
-            "Poltics", "Science", "Sports", "Technology", "Top", "World"
+            "Politics", "Science", "Sports", "Technology", "Top", "World"
     };
 }
 
