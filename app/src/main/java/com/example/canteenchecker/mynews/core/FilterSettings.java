@@ -61,7 +61,7 @@ public class FilterSettings {
     }
 
     public static void setCategoriesFullName(Collection<String> categoriesFullName) {
-        FilterSettings.countriesFullName = categoriesFullName;
+        FilterSettings.categoriesFullName = categoriesFullName;
         Log.e("FilterSettings SET TO:", "Categories:" + categoriesFullName + ".");
     }
 
