@@ -3,6 +3,7 @@ package com.example.canteenchecker.mynews.ui;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -55,6 +56,7 @@ import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity {
     private String TAG = getClass().getName();
+    //Constants constants = new Constants();
 
     private static boolean firstInit = true;
 
@@ -84,6 +86,8 @@ public class HomeActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        new Constants(this);
+
 
         RecyclerView rcvNews = findViewById(R.id.rcvNews);
         rcvNews.setLayoutManager(new LinearLayoutManager(this));

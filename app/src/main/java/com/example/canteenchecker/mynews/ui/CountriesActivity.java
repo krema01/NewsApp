@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,18 +49,39 @@ public class CountriesActivity extends AppCompatActivity {
 
     private void setCountries() {
         for(Map.Entry<String,String> entry : Constants.COUNTRIES.entrySet()){
+
+            LinearLayout countryLayout = new LinearLayout(this);
+            countryLayout.setOrientation(LinearLayout.HORIZONTAL);
+            countryLayout.setWeightSum(5);
+
+            ImageView imageView = new ImageView(this);
+            imageView.setImageResource(R.drawable.baseline_check_circle_green_800_24dp);
+            imageView.setVisibility(ImageView.INVISIBLE);
+            LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            imageParams.gravity = Gravity.CENTER;
+            imageParams.setMargins(10,10,10,10);
+            imageView.setLayoutParams(imageParams);
+
+
+
+
             TextView textView = new TextView(this);
             textView.setText(entry.getKey());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             params.setMargins(10,10,10,10);
             textView.setLayoutParams(params);
             textView.setTextSize(25);
+
+            countryLayout.addView(imageView);
+            countryLayout.addView(textView);
+
             if(selectedCountries != null) {
                 if (selectedCountries.contains(entry.getKey()))
-                    textView.setBackgroundColor(Color.parseColor("#a3a3a3"));
+                    imageView.setVisibility(ImageView.VISIBLE);
+                    //textView.setBackgroundColor(Color.parseColor("#a3a3a3"));
             }
-            else
-                textView.setBackgroundColor(Color.parseColor("#ffffff"));
+            //else
+            //    textView.setBackgroundColor(Color.parseColor("#ffffff"));
 
             textView.setOnClickListener(new View.OnClickListener(){
                 @Override
@@ -68,7 +91,8 @@ public class CountriesActivity extends AppCompatActivity {
                         Log.e("ALREADY SELECTED", selectedCountry);
                         //Country already selected.. unselect
                         selectedCountries.remove(selectedCountry);
-                        textView.setBackgroundColor(Color.parseColor("#ffffff"));
+                        imageView.setVisibility(ImageView.INVISIBLE);
+                        //textView.setBackgroundColor(Color.parseColor("#ffffff"));
                     }
 
                     else{
@@ -76,7 +100,8 @@ public class CountriesActivity extends AppCompatActivity {
                         if(selectedCountries != null && selectedCountries.size() < 5) {
                             //select country
                             selectedCountries.add(selectedCountry);
-                            textView.setBackgroundColor(Color.parseColor("#a3a3a3"));
+                            imageView.setVisibility(ImageView.VISIBLE);
+                            //textView.setBackgroundColor(Color.parseColor("#a3a3a3"));
                         }
                         else {
                             Toast.makeText(getApplicationContext(),
@@ -87,7 +112,7 @@ public class CountriesActivity extends AppCompatActivity {
                     }
                 }
             });
-            layout.addView(textView);
+            layout.addView(countryLayout);
         }
     }
 
@@ -126,9 +151,6 @@ public class CountriesActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                for(int i = 0; i < layout.getChildCount(); ++i){
-                    layout.getChildAt(i).setBackgroundColor(Color.parseColor("#ffffff"));
-                }
                 selectedCountries.clear();
                 FilterSettings.setCountriesFilter("");
                 FilterSettings.setCountriesFullName(null);

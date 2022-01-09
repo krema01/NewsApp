@@ -13,6 +13,8 @@
     <string name="select_to_date">Datum bis</string>
     <string name="select_from_date">Datum von</string>
     <string name="delete_filters">Alle Filter löschen</string>
+
+    <!-- Countries -->
     <string name="argentina">Argentinien</string>
     <string name="australia">Australien</string>
     <string name="austria">Österreich</string>
@@ -22,6 +24,7 @@
     <string name="canada">Kanada</string>
     <string name="china">China</string>
     <string name="colombia">Kolumbien</string>
+    <string name="cuba">Kuba</string>
     <string name="czech_republik">Tschechien</string>
     <string name="egypt">Ägypten</string>
     <string name="france">Frankreich</string>
@@ -70,5 +73,53 @@
     <string name="united_kingdom">Vereinigtes Königreich</string>
     <string name="united_states_of_america">Vereinigte Staaten</string>
     <string name="venezuela">Venezuela</string>
+
+    <!-- Languages -->
+    <string name="arabic">Arabisch</string>
+    <string name="bosnian">Bosnisch</string>
+    <string name="bulgarian">Bulgarisch</string>
+    <string name="chinese">Chinesisch</string>
+    <string name="croatian">Kroatisch</string>
+    <string name="czech">Tschechisch</string>
+    <string name="dutch">Holländisch</string>
+    <string name="english">Englisch</string>
+    <string name="french">Französisch</string>
+    <string name="german">Deutsch</string>
+    <string name="greek">Griechisch</string>
+    <string name="hebrew">Hebräisch</string>
+    <string name="hindi">Hindi</string>
+    <string name="hungarian">Ungarisch</string>
+    <string name="indonesian">Indonesisch</string>
+    <string name="italian">Italienisch</string>
+    <string name="japanese">Japanisch</string>
+    <string name="korean">Koreanisch</string>
+    <string name="latvian">Lettisch</string>
+    <string name="lithuanian">Litauisch</string>
+    <string name="malay">Malaiisch</string>
+    <string name="norwegian">Norwegisch</string>
+    <string name="polish">Polnisch</string>
+    <string name="portuguese">Portugiesisch</string>
+    <string name="romanian">Rumänisch</string>
+    <string name="serbian">Serbisch</string>
+    <string name="slovak">Slowakisch</string>
+    <string name="slovenian">Slovenisch</string>
+    <string name="spanish">Spanisch</string>
+    <string name="swedish">Schwedisch</string>
+    <string name="thai">Thailändisch</string>
+    <string name="turkish">Türkisch</string>
+    <string name="ukranian">Ukraninisch</string>
+
+    <!-- Categories -->
+    <string name="business">Business</string>
+    <string name="entertainment">Unterhaltung</string>
+    <string name="environment">Umwelt</string>
+    <string name="food">Kulinarik</string>
+    <string name="health">Gesundheit</string>
+    <string name="politics">Politik</string>
+    <string name="science">Wissenschaft</string>
+    <string name="sports">Sport</string>
+    <string name="technology">Technologie</string>
+    <string name="top">Top</string>
+    <string name="world">International</string>
 
 </resources>

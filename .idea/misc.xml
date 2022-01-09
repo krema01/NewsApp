@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/baseline_check_circle_green_800_48dp.xml" value="0.14895833333333333" />
         <entry key="app/src/main/res/drawable/baseline_language_black_24dp.xml" value="0.2578125" />
         <entry key="app/src/main/res/drawable/baseline_location_on_black_24dp.xml" value="0.2578125" />
         <entry key="app/src/main/res/layout/activity_categories.xml" value="0.1" />

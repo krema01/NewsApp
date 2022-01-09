@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,21 +49,41 @@ public class CategoriesActivity extends AppCompatActivity {
 
 
     private void setCategories() {
-        for(int i = 0; i < Constants.CATEGORIES.length; ++i){
+        for(Map.Entry<String,String> entry : Constants.CATEGORIES.entrySet()){
+
+
+            LinearLayout categoryLayout = new LinearLayout(this);
+            categoryLayout.setOrientation(LinearLayout.HORIZONTAL);
+            categoryLayout.setWeightSum(5);
+
+            ImageView imageView = new ImageView(this);
+            imageView.setImageResource(R.drawable.baseline_check_circle_green_800_24dp);
+            imageView.setVisibility(ImageView.INVISIBLE);
+            LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            imageParams.gravity = Gravity.CENTER;
+            imageParams.setMargins(10,10,10,10);
+            imageView.setLayoutParams(imageParams);
+
+
             TextView textView = new TextView(this);
-            textView.setText(Constants.CATEGORIES[i]);
+            textView.setText(entry.getKey());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             params.setMargins(10,10,10,10);
             textView.setLayoutParams(params);
             textView.setTextSize(25);
-            if(selectedCategories != null) {
-                if (selectedCategories.contains(Constants.CATEGORIES[i]))
-                    textView.setBackgroundColor(Color.parseColor("#a3a3a3"));
-            }
-            else
-                textView.setBackgroundColor(Color.parseColor("#ffffff"));
 
-            textView.setOnClickListener(new View.OnClickListener(){
+            categoryLayout.addView(imageView);
+            categoryLayout.addView(textView);
+
+            if(selectedCategories != null) {
+                if (selectedCategories.contains(entry.getKey()))
+                    imageView.setVisibility(ImageView.VISIBLE);
+                    //textView.setBackgroundColor(Color.parseColor("#a3a3a3"));
+            }
+            //else
+            //    textView.setBackgroundColor(Color.parseColor("#ffffff"));
+
+            categoryLayout.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     String selectedCategory = textView.getText().toString();
@@ -69,7 +91,8 @@ public class CategoriesActivity extends AppCompatActivity {
                         Log.e("ALREADY SELECTED", selectedCategory);
                         //Category already selected.. unselect
                         selectedCategories.remove(selectedCategory);
-                        textView.setBackgroundColor(Color.parseColor("#ffffff"));
+                        imageView.setVisibility(ImageView.INVISIBLE);
+                        //textView.setBackgroundColor(Color.parseColor("#ffffff"));
                     }
 
                     else{
@@ -77,7 +100,8 @@ public class CategoriesActivity extends AppCompatActivity {
                         if(selectedCategories != null && selectedCategories.size() < 5) {
                             //select category
                             selectedCategories.add(selectedCategory);
-                            textView.setBackgroundColor(Color.parseColor("#a3a3a3"));
+                            imageView.setVisibility(ImageView.VISIBLE);
+                            //textView.setBackgroundColor(Color.parseColor("#a3a3a3"));
                         }
                         else {
                             Toast.makeText(getApplicationContext(),
@@ -88,7 +112,7 @@ public class CategoriesActivity extends AppCompatActivity {
                     }
                 }
             });
-            layout.addView(textView);
+            layout.addView(categoryLayout);
         }
     }
 
@@ -104,7 +128,7 @@ public class CategoriesActivity extends AppCompatActivity {
                     categoryShortSb.append("category=");
                     int i = 0;
                     for(String category : selectedCategories){
-                        categoryShortSb.append(category);
+                        categoryShortSb.append(Constants.CATEGORIES.get(category));
                         categoryLong.add(category);
                         if (i != selectedCategories.size() - 1) {
                             categoryShortSb.append(",");
@@ -127,9 +151,6 @@ public class CategoriesActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                for(int i = 0; i < layout.getChildCount(); ++i){
-                    layout.getChildAt(i).setBackgroundColor(Color.parseColor("#ffffff"));
-                }
                 selectedCategories.clear();
                 FilterSettings.setCategoriesFilter("");
                 FilterSettings.setCategoriesFullName(null);

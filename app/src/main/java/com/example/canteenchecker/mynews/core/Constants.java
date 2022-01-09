@@ -1,164 +1,155 @@
 package com.example.canteenchecker.mynews.core;
 
-import java.util.HashMap;
+import android.content.Context;
+import android.util.Log;
+
+import com.example.canteenchecker.mynews.R;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Constants {
-
+    private Context context;
     public static final String BASE_URL = "https://newsdata.io/api/1/news?apikey=";
     public static final String API = "pub_3299d32b8b154373c88df9cbebb156b295d3";
     public static final String AND = "&";
 
     public static final String COPYRIGHT = "\u00a9";
 
-    public static final Map<String, String> COUNTRIES = new LinkedHashMap<String, String>()
-    {
+    public static Map<String, String> COUNTRIES;
+    public static Map<String, String> LANGUAGES;
+    public static Map<String, String> CATEGORIES;
+
+    public Constants(Context context){
+        this.context = context;
+        Log.e("CONSTANTS: ", " " + context.getResources().getString(R.string.argentina));
+        setCountries();
+        setLanguages();
+        setCategories();
+    }
+
+    private void setCountries() {
+        COUNTRIES = new LinkedHashMap<String, String>()
         {
-            put("Argentina", "ar");
-            put("Australia", "au");
-            put("Austria", "at");
-            put("Belgium", "be");
-            put("Brazil", "br");
-            put("Bulgaria", "bg");
-            put("Canada", "ca");
-            put("China", "cn");
-            put("Colombia", "co");
-            put("Cuba", "cu");
-            put("Czech Republic", "cz");
-            put("Egypt", "eg");
-            put("France", "fr");
-            put("Germany", "de");
-            put("Greece", "gr");
-            put("Hong Kong", "hk");
-            put("Hungary", "hu");
-            put("India", "in");
-            put("Indonesia", "id");
-            put("Ireland", "ie");
-            put("Israel", "il");
-            put("Italy", "it");
-            put("Japan", "jp");
-            put("Latvia", "lv");
-            put("Lebanon", "lv");
-            put("Lithuania", "lt");
-            put("Malaysia", "my");
-            put("Mexico", "mx");
-            put("Morocco", "ma");
-            put("Netherlands", "nl");
-            put("New Zealand", "nz");
-            put("Nigeria", "ng");
-            put("North Korea", "kp");
-            put("Norway", "no");
-            put("Pakistan", "pk");
-            put("Philippines", "ph");
-            put("Poland", "pl");
-            put("Portugal", "pt");
-            put("Romania", "ro");
-            put("Russia", "ru");
-            put("Saudi Arabia", "sa");
-            put("Serbia", "rs");
-            put("Singapore", "sg");
-            put("Slovakia", "sk");
-            put("Slovenia", "si");
-            put("South Africa", "za");
-            put("South Korea", "kr");
-            put("Spain", "es");
-            put("Sweden", "se");
-            put("Switzerland", "ch");
-            put("Taiwan", "tw");
-            put("Thailand", "th");
-            put("Turkey", "tr");
-            put("Ukraine", "ua");
-            put("United Arab Emirates", "ae");
-            put("United Kingdom", "gb");
-            put("United State of America", "us");
-            put("Venezuela", "ve");
-        }
-    };
+            {
+                put(context.getResources().getString(R.string.argentina), "ar");
+                put(context.getResources().getString(R.string.australia), "au");
+                put(context.getResources().getString(R.string.austria), "at");
+                put(context.getResources().getString(R.string.belgium), "be");
+                put(context.getResources().getString(R.string.brazil), "br");
+                put(context.getResources().getString(R.string.bulgaria), "bg");
+                put(context.getResources().getString(R.string.canada), "ca");
+                put(context.getResources().getString(R.string.china), "cn");
+                put(context.getResources().getString(R.string.colombia), "co");
+                put(context.getResources().getString(R.string.cuba), "cu");
+                put(context.getResources().getString(R.string.czech_republik), "cz");
+                put(context.getResources().getString(R.string.egypt), "eg");
+                put(context.getResources().getString(R.string.france), "fr");
+                put(context.getResources().getString(R.string.germany), "de");
+                put(context.getResources().getString(R.string.greece), "gr");
+                put(context.getResources().getString(R.string.hong_kong), "hk");
+                put(context.getResources().getString(R.string.hungary), "hu");
+                put(context.getResources().getString(R.string.indonesia), "in");
+                put(context.getResources().getString(R.string.indonesia), "id");
+                put(context.getResources().getString(R.string.ireland), "ie");
+                put(context.getResources().getString(R.string.israel), "il");
+                put(context.getResources().getString(R.string.italy), "it");
+                put(context.getResources().getString(R.string.japan), "jp");
+                put(context.getResources().getString(R.string.latvia), "lv");
+                put(context.getResources().getString(R.string.lebanon), "lv");
+                put(context.getResources().getString(R.string.lithuania), "lt");
+                put(context.getResources().getString(R.string.malaysia), "my");
+                put(context.getResources().getString(R.string.mexico), "mx");
+                put(context.getResources().getString(R.string.morocco), "ma");
+                put(context.getResources().getString(R.string.netherlands), "nl");
+                put(context.getResources().getString(R.string.new_zealand), "nz");
+                put(context.getResources().getString(R.string.nigeria), "ng");
+                put(context.getResources().getString(R.string.north_korea), "kp");
+                put(context.getResources().getString(R.string.norway), "no");
+                put(context.getResources().getString(R.string.pakistan), "pk");
+                put(context.getResources().getString(R.string.phillipines), "ph");
+                put(context.getResources().getString(R.string.poland), "pl");
+                put(context.getResources().getString(R.string.portugal), "pt");
+                put(context.getResources().getString(R.string.romania), "ro");
+                put(context.getResources().getString(R.string.russia), "ru");
+                put(context.getResources().getString(R.string.saudi_arabia), "sa");
+                put(context.getResources().getString(R.string.serbia), "rs");
+                put(context.getResources().getString(R.string.singapore), "sg");
+                put(context.getResources().getString(R.string.slovakia), "sk");
+                put(context.getResources().getString(R.string.slovenia), "si");
+                put(context.getResources().getString(R.string.south_africa), "za");
+                put(context.getResources().getString(R.string.south_korea), "kr");
+                put(context.getResources().getString(R.string.spain), "es");
+                put(context.getResources().getString(R.string.sweden), "se");
+                put(context.getResources().getString(R.string.switzerland), "ch");
+                put(context.getResources().getString(R.string.taiwan), "tw");
+                put(context.getResources().getString(R.string.thailand), "th");
+                put(context.getResources().getString(R.string.turkey), "tr");
+                put(context.getResources().getString(R.string.ukraine), "ua");
+                put(context.getResources().getString(R.string.united_arab_emirates), "ae");
+                put(context.getResources().getString(R.string.united_kingdom), "gb");
+                put(context.getResources().getString(R.string.united_states_of_america), "us");
+                put(context.getResources().getString(R.string.venezuela), "ve");
+            }
+        };
+    }
 
+    private void setLanguages() {
+        LANGUAGES = new LinkedHashMap<String, String>(){
+            {
+                put(context.getResources().getString(R.string.arabic), "ar");
+                put(context.getResources().getString(R.string.bosnian), "bs");
+                put(context.getResources().getString(R.string.bulgarian), "bg");
+                put(context.getResources().getString(R.string.chinese), "zh");
+                put(context.getResources().getString(R.string.croatian), "hr");
+                put(context.getResources().getString(R.string.czech), "cs");
+                put(context.getResources().getString(R.string.dutch), "nl");
+                put(context.getResources().getString(R.string.english), "en");
+                put(context.getResources().getString(R.string.french), "fr");
+                put(context.getResources().getString(R.string.german), "de");
+                put(context.getResources().getString(R.string.greek), "el");
+                put(context.getResources().getString(R.string.hebrew), "he");
+                put(context.getResources().getString(R.string.hindi), "hi");
+                put(context.getResources().getString(R.string.hungarian), "hu");
+                put(context.getResources().getString(R.string.indonesian), "in");
+                put(context.getResources().getString(R.string.italian), "it");
+                put(context.getResources().getString(R.string.japanese), "jp");
+                put(context.getResources().getString(R.string.korean), "ko");
+                put(context.getResources().getString(R.string.latvian), "lv");
+                put(context.getResources().getString(R.string.lithuanian), "lt");
+                put(context.getResources().getString(R.string.malay), "ms");
+                put(context.getResources().getString(R.string.norwegian), "pl");
+                put(context.getResources().getString(R.string.polish), "pt");
+                put(context.getResources().getString(R.string.portuguese), "ro");
+                put(context.getResources().getString(R.string.romanian), "ru");
+                put(context.getResources().getString(R.string.serbian), "sr");
+                put(context.getResources().getString(R.string.slovak), "sk");
+                put(context.getResources().getString(R.string.slovenian), "sl");
+                put(context.getResources().getString(R.string.spanish), "es");
+                put(context.getResources().getString(R.string.swedish), "sv");
+                put(context.getResources().getString(R.string.thai), "th");
+                put(context.getResources().getString(R.string.turkish), "tr");
+                put(context.getResources().getString(R.string.ukranian), "uk");
+            }
+        };
+    }
 
-    //public static final String[] COUNTRIES_ABBREVIATIONS = {
-    //        "ar", "au", "at", "be", "br", "bg", "ca", "cn", "co",
-    //        "cu", "cz", "eg", "fr", "de", "gr", "hk", "hu", "in",
-    //        "id", "ie", "il", "it", "jp", "lv", "lb", "lt", "my",
-    //        "mx", "ma", "nl", "nz", "ng", "kp", "no", "pk", "ph",
-    //        "pl", "pt", "ro", "ru", "sa", "rs", "sg", "sk", "si",
-    //        "za", "kr", "es", "se", "ch", "tw", "th", "tr", "ua",
-    //        "ae", "gb", "us", "ve"
-    //};
-    //public static final String[] COUNTRIES_AVAILABLE = {
-    //        "Argentina", "Australia", "Austria", "Belgium",
-    //        "Brazil", "Bulgaria", "Canada", "China", "Colombia",
-    //        "Cuba", "Czech Republic", "Egypt", "France", "Germany",
-    //        "Greece", "Hong Kong", "Hungary", "India", "Indonesia",
-    //        "Ireland", "Israel", "Italy", "Japan", "Latvia", "Lebanon",
-    //        "Lithuania", "Malaysia", "Mexico", "Morocco", "Netherlands",
-    //        "New Zealand", "Nigeria", "North Korea", "Norway", "Pakistan",
-    //        "Philippines", "Poland", "Portugal", "Romania", "Russia",
-    //        "Saudi Arabia", "Serbia", "Singapore", "Slovakia", "Slovenia",
-    //        "South Africa", "South Korea", "Spain", "Sweden", "Switzerland",
-    //        "Taiwan", "Thailand", "Turkey", "Ukraine", "United Arab Emirates",
-    //        "United Kingdom", "United State of America", "Venezuela"
-    //};
-
-
-    public static final Map<String, String> LANGUAGES = new LinkedHashMap<String, String>(){
-        {
-            put("Arabic", "ar");
-            put("Bosnian", "bs");
-            put("Bulgarian", "bg");
-            put("Chinese", "zh");
-            put("Croatian", "hr");
-            put("Czech", "cs");
-            put("Dutch", "nl");
-            put("English", "en");
-            put("French", "fr");
-            put("German", "de");
-            put("Greek", "el");
-            put("Hebrew", "he");
-            put("Hindi", "hi");
-            put("Hungarian", "hu");
-            put("Indonesian", "in");
-            put("Italian", "it");
-            put("Japanese", "jp");
-            put("Korean", "ko");
-            put("Latvian", "lv");
-            put("Lithuanian", "lt");
-            put("Malay", "ms");
-            put("Norwegian", "pl");
-            put("Polish", "pt");
-            put("Portuguese", "ro");
-            put("Romanian", "ru");
-            put("Serbian", "sr");
-            put("Slovak", "sk");
-            put("Slovenian", "sl");
-            put("Spanish", "es");
-            put("Swedish", "sv");
-            put("Thai", "th");
-            put("Turkish", "tr");
-            put("Ukranian", "uk");
-        }
-    };
-
-   // public static final String[] LANGUAGES_AVAILABLE = {
-   //         "Arabic", "Bosnian", "Bulgarian", "Chinese", "Croatian", "Czech",
-   //         "Dutch", "English", "French", "German", "Greek", "Hebrew", "Hindi",
-   //         "Hungarian", "Indonesian", "Italian", "Japanese", "Korean",
-   //         "Latvian", "Lithuanian", "Malay", "Norwegian", "Polish", "Portuguese",
-   //         "Romanian", "Serbian", "Slovak", "Slovenian", "Spanish", "Swedish",
-   //         "Thai", "Turkish", "Ukranian"
-   // };
-//
-   // public static final String[] LANGUAGES_ABBREVIATIONS = {
-   //         "ar", "bs", "bg", "zh", "hr", "cs", "nl", "en", "fr", "de", "el",
-   //         "he", "hi", "hu", "in", "it", "jp", "ko", "lv", "lt", "ms", "no",
-   //         "pl", "pt", "ro", "ru", "sr", "sk", "sl", "es", "sv", "th", "tr", "uk"
-   // };
-
-    public static final String[] CATEGORIES = {
-            "Business", "Entertainment", "Environment", "Food", "Health",
-            "Politics", "Science", "Sports", "Technology", "Top", "World"
-    };
+    private void setCategories() {
+        CATEGORIES = new LinkedHashMap<String, String>();
+        CATEGORIES.put(context.getResources().getString(R.string.business), "business");
+        CATEGORIES.put(context.getResources().getString(R.string.entertainment), "entertainment");
+        CATEGORIES.put(context.getResources().getString(R.string.environment), "environment");
+        CATEGORIES.put(context.getResources().getString(R.string.food), "food");
+        CATEGORIES.put(context.getResources().getString(R.string.health), "health");
+        CATEGORIES.put(context.getResources().getString(R.string.politics), "politics");
+        CATEGORIES.put(context.getResources().getString(R.string.science), "science");
+        CATEGORIES.put(context.getResources().getString(R.string.sports), "sports");
+        CATEGORIES.put(context.getResources().getString(R.string.technology), "technology");
+        CATEGORIES.put(context.getResources().getString(R.string.top), "top");
+        CATEGORIES.put(context.getResources().getString(R.string.world), "world");
+    }
 }
 
 
