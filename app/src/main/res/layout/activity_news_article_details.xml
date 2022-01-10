@@ -38,8 +38,8 @@
                 android:id="@+id/detailsImage"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="200dp"
-                android:scaleType="fitXY"
+                android:minHeight="0dp"
+                android:adjustViewBounds="true"
                 android:visibility="visible"
                 />
 

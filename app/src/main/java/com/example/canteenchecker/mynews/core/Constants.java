@@ -58,7 +58,7 @@ public class Constants {
                 put(context.getResources().getString(R.string.italy), "it");
                 put(context.getResources().getString(R.string.japan), "jp");
                 put(context.getResources().getString(R.string.latvia), "lv");
-                put(context.getResources().getString(R.string.lebanon), "lv");
+                put(context.getResources().getString(R.string.lebanon), "lb");
                 put(context.getResources().getString(R.string.lithuania), "lt");
                 put(context.getResources().getString(R.string.malaysia), "my");
                 put(context.getResources().getString(R.string.mexico), "mx");
@@ -91,7 +91,7 @@ public class Constants {
                 put(context.getResources().getString(R.string.united_arab_emirates), "ae");
                 put(context.getResources().getString(R.string.united_kingdom), "gb");
                 put(context.getResources().getString(R.string.united_states_of_america), "us");
-                put(context.getResources().getString(R.string.venezuela), "ve");
+                put(context.getResources().getString(R.string.venezuela), "vz");
             }
         };
     }
@@ -99,39 +99,39 @@ public class Constants {
     private void setLanguages() {
         LANGUAGES = new LinkedHashMap<String, String>(){
             {
-                put(context.getResources().getString(R.string.arabic), "ar");
-                put(context.getResources().getString(R.string.bosnian), "bs");
-                put(context.getResources().getString(R.string.bulgarian), "bg");
-                put(context.getResources().getString(R.string.chinese), "zh");
-                put(context.getResources().getString(R.string.croatian), "hr");
-                put(context.getResources().getString(R.string.czech), "cs");
-                put(context.getResources().getString(R.string.dutch), "nl");
-                put(context.getResources().getString(R.string.english), "en");
-                put(context.getResources().getString(R.string.french), "fr");
-                put(context.getResources().getString(R.string.german), "de");
-                put(context.getResources().getString(R.string.greek), "el");
-                put(context.getResources().getString(R.string.hebrew), "he");
-                put(context.getResources().getString(R.string.hindi), "hi");
-                put(context.getResources().getString(R.string.hungarian), "hu");
-                put(context.getResources().getString(R.string.indonesian), "in");
-                put(context.getResources().getString(R.string.italian), "it");
-                put(context.getResources().getString(R.string.japanese), "jp");
-                put(context.getResources().getString(R.string.korean), "ko");
-                put(context.getResources().getString(R.string.latvian), "lv");
-                put(context.getResources().getString(R.string.lithuanian), "lt");
-                put(context.getResources().getString(R.string.malay), "ms");
-                put(context.getResources().getString(R.string.norwegian), "pl");
-                put(context.getResources().getString(R.string.polish), "pt");
-                put(context.getResources().getString(R.string.portuguese), "ro");
-                put(context.getResources().getString(R.string.romanian), "ru");
-                put(context.getResources().getString(R.string.serbian), "sr");
-                put(context.getResources().getString(R.string.slovak), "sk");
-                put(context.getResources().getString(R.string.slovenian), "sl");
-                put(context.getResources().getString(R.string.spanish), "es");
-                put(context.getResources().getString(R.string.swedish), "sv");
-                put(context.getResources().getString(R.string.thai), "th");
-                put(context.getResources().getString(R.string.turkish), "tr");
-                put(context.getResources().getString(R.string.ukranian), "uk");
+                put(context.getResources().getString(R.string.arabic),"ar");
+                put(context.getResources().getString(R.string.bosnian),"bs");
+                put(context.getResources().getString(R.string.bulgarian),"bg");
+                put(context.getResources().getString(R.string.chinese),"zh");
+                put(context.getResources().getString(R.string.croatian),"hr");
+                put(context.getResources().getString(R.string.czech),"cs");
+                put(context.getResources().getString(R.string.dutch),"nl");
+                put(context.getResources().getString(R.string.english),"en");
+                put(context.getResources().getString(R.string.french),"fr");
+                put(context.getResources().getString(R.string.german),"de");
+                put(context.getResources().getString(R.string.greek),"el");
+                put(context.getResources().getString(R.string.hebrew),"he");
+                put(context.getResources().getString(R.string.hindi),"hi");
+                put(context.getResources().getString(R.string.hungarian),"hu");
+                put(context.getResources().getString(R.string.indonesian),"in");
+                put(context.getResources().getString(R.string.italian),"it");
+                put(context.getResources().getString(R.string.japanese),"jp");
+                put(context.getResources().getString(R.string.korean),"ko");
+                put(context.getResources().getString(R.string.latvian),"lv");
+                put(context.getResources().getString(R.string.lithuanian),"lt");
+                put(context.getResources().getString(R.string.malay),"ms");
+                put(context.getResources().getString(R.string.norwegian),"pl");
+                put(context.getResources().getString(R.string.polish),"pt");
+                put(context.getResources().getString(R.string.portuguese),"ro");
+                put(context.getResources().getString(R.string.romanian),"ru");
+                put(context.getResources().getString(R.string.serbian),"sr");
+                put(context.getResources().getString(R.string.slovak),"sk");
+                put(context.getResources().getString(R.string.slovenian),"sl");
+                put(context.getResources().getString(R.string.spanish),"es");
+                put(context.getResources().getString(R.string.swedish),"sv");
+                put(context.getResources().getString(R.string.thai),"th");
+                put(context.getResources().getString(R.string.turkish),"tr");
+                put(context.getResources().getString(R.string.ukranian),"uk");
             }
         };
     }

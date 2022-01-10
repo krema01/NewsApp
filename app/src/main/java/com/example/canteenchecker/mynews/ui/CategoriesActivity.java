@@ -70,13 +70,13 @@ public class CategoriesActivity extends AppCompatActivity {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             params.setMargins(10,10,10,10);
             textView.setLayoutParams(params);
-            textView.setTextSize(25);
+            textView.setTextSize(20);
 
             categoryLayout.addView(imageView);
             categoryLayout.addView(textView);
 
             if(selectedCategories != null) {
-                if (selectedCategories.contains(entry.getKey()))
+                if (selectedCategories.contains(entry.getValue()))
                     imageView.setVisibility(ImageView.VISIBLE);
                     //textView.setBackgroundColor(Color.parseColor("#a3a3a3"));
             }
@@ -86,7 +86,7 @@ public class CategoriesActivity extends AppCompatActivity {
             categoryLayout.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    String selectedCategory = textView.getText().toString();
+                    String selectedCategory = Constants.CATEGORIES.get(textView.getText().toString());
                     if (selectedCategories != null && selectedCategories.contains(selectedCategory)) {
                         Log.e("ALREADY SELECTED", selectedCategory);
                         //Category already selected.. unselect
@@ -100,6 +100,7 @@ public class CategoriesActivity extends AppCompatActivity {
                         if(selectedCategories != null && selectedCategories.size() < 5) {
                             //select category
                             selectedCategories.add(selectedCategory);
+                            Log.e("SELECTED NOW: ", " " + selectedCategories);
                             imageView.setVisibility(ImageView.VISIBLE);
                             //textView.setBackgroundColor(Color.parseColor("#a3a3a3"));
                         }
@@ -128,7 +129,7 @@ public class CategoriesActivity extends AppCompatActivity {
                     categoryShortSb.append("category=");
                     int i = 0;
                     for(String category : selectedCategories){
-                        categoryShortSb.append(Constants.CATEGORIES.get(category));
+                        categoryShortSb.append(category);
                         categoryLong.add(category);
                         if (i != selectedCategories.size() - 1) {
                             categoryShortSb.append(",");

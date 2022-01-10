@@ -68,13 +68,14 @@ public class LanguagesActivity extends AppCompatActivity {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             params.setMargins(10,10,10,10);
             textView.setLayoutParams(params);
-            textView.setTextSize(25);
+            textView.setTextSize(20);
 
             languageLayout.addView(imageView);
             languageLayout.addView(textView);
 
 
             if(selectedLanguages != null) {
+                Log.e("Sel Lang", " " + selectedLanguages);
                 if (selectedLanguages.contains(entry.getKey()))
                     imageView.setVisibility(ImageView.VISIBLE);
                     //textView.setBackgroundColor(Color.parseColor("#a3a3a3"));

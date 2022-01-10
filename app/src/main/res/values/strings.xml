@@ -121,6 +121,9 @@
     <string name="technology">Technologie</string>
     <string name="top">Top</string>
     <string name="world">International</string>
+
+
+    <!-- Hints -->
     <string name="selectCountriesHint">Hier können bis zu 5 Länder gewählt werden.</string>
     <string name="selectLanguagesHint">Hier können bis zu 5 Sprachen gewählt werden.</string>
     <string name="selectCategoriesHint">Hier können bis zu 5 Kategorien ausgewählt werden.</string>

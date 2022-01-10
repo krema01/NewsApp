@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -90,7 +91,8 @@ public class FilterActivity extends AppCompatActivity {
         });
 
         EditText keywordTextView = findViewById(R.id.filtersKeyword);
-        keywordTextView.setText(HomeActivity.lastKeyword);
+        if(HomeActivity.lastKeyword != null && HomeActivity.lastKeyword.length() > 0)
+        keywordTextView.setText(HomeActivity.lastKeyword.replace("%20", " "));
     }
 
 

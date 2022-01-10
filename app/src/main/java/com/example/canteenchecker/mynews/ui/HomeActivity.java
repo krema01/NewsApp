@@ -116,12 +116,16 @@ public class HomeActivity extends AppCompatActivity {
             String countryCodeValue = Locale.getDefault().getCountry().toLowerCase();
             Log.e("COUNTRYCODE:", " = " + countryCodeValue);
             FilterSettings.setCountriesFilter("country=" + countryCodeValue);
+            Collection<String> countriesFull = new ArrayList<>();
+            Locale loc = new Locale("",countryCodeValue);
+            countriesFull.add(loc.getDisplayCountry());
+            FilterSettings.setCountriesFullName(countriesFull);
         }
         else{
             keywordSearch.setText(getIntent().getStringExtra(FILTER_KEYWORD));
         }
 
-        //showNews();
+        showNews();
         firstInit = false;
     }
 

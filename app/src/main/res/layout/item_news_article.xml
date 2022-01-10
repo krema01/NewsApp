@@ -116,7 +116,9 @@
             app:layout_constraintBottom_toTopOf="@id/itemSourceView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:scaleType="fitXY"
+            android:layout_marginLeft="@dimen/distance_small"
+            android:layout_marginRight="@dimen/distance_small"
+            android:adjustViewBounds="true"
             android:visibility="gone"
             />
 <!--

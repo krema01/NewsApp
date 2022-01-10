@@ -44,6 +44,7 @@ public class CountriesActivity extends AppCompatActivity {
 
     private void restoreFilters() {
         selectedCountries = (ArrayList)FilterSettings.getCountriesFullName();
+        Log.e("SELECTED IN COUNTRIES: ", " " + selectedCountries);
     }
 
 
@@ -70,7 +71,7 @@ public class CountriesActivity extends AppCompatActivity {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             params.setMargins(10,10,10,10);
             textView.setLayoutParams(params);
-            textView.setTextSize(25);
+            textView.setTextSize(20);
 
             countryLayout.addView(imageView);
             countryLayout.addView(textView);
