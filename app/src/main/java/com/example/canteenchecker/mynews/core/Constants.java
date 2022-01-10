@@ -1,6 +1,7 @@
 package com.example.canteenchecker.mynews.core;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.example.canteenchecker.mynews.R;
@@ -22,12 +23,25 @@ public class Constants {
     public static Map<String, String> LANGUAGES;
     public static Map<String, String> CATEGORIES;
 
+    private static SharedPreferences settings;
+
+
     public Constants(Context context){
         this.context = context;
         Log.e("CONSTANTS: ", " " + context.getResources().getString(R.string.argentina));
         setCountries();
         setLanguages();
         setCategories();
+        settings = context.getSharedPreferences(Constants.API, 0);
+        //settings.edit().remove("api").apply();
+        setAPI(settings.getString("api", null));
+    }
+
+    public static void setAPI(String API) {
+        Constants.API = API;
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("api", Constants.API);
+        editor.apply();
     }
 
     private void setCountries() {

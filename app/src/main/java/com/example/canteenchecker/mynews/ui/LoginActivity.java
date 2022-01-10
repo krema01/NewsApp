@@ -22,15 +22,19 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        new Constants(this);
 
 
-        SharedPreferences settings = getApplicationContext().getSharedPreferences(Constants.API, 0);
+
+        //SharedPreferences.Editor editor = settings.edit();
+        //editor.remove("api");
+        //editor.apply();
+
+        //Log.e("LOGIN LOG: ", " " + settings.getString("api", null));
 
 
-        Log.e("LOGIN: ", " " + settings.getString("api", null));
-        if(settings.getString("api", null) != null) {
-            Constants.API = settings.getString("api", null);
-
+        //Log.e("LOGIN: ", " " + settings.getString("api", null));
+        if(Constants.API != null) {
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(intent);
         }
@@ -44,10 +48,8 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if(loginApi.getText() != null && loginApi.getText().toString().length() > 0){
-                        Constants.API = loginApi.getText().toString();
-                        SharedPreferences.Editor editor = settings.edit();
-                        editor.putString("api", Constants.API);
-                        editor.apply();
+                        Constants.setAPI(loginApi.getText().toString());
+
                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         startActivity(intent);
                     }

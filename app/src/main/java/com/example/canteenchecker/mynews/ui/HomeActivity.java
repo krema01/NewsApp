@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,6 +60,7 @@ public class HomeActivity extends AppCompatActivity {
     private String TAG = getClass().getName();
     //Constants constants = new Constants();
 
+
     private static boolean firstInit = true;
 
     private static final String FILTER_KEYWORD = "keyword";
@@ -71,6 +73,7 @@ public class HomeActivity extends AppCompatActivity {
     private SwipeRefreshLayout srlSwipeRefreshLayout;
     EditText keywordSearch;
     Button btnSearch;
+    LinearLayout logoLayout;
 
     public static Collection<NewsArticle> allArticles = new ArrayList<NewsArticle>();
     public static String lastKeyword;
@@ -87,13 +90,13 @@ public class HomeActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        new Constants(this);
 
         //SharedPreferences settings1 = getApplicationContext().getSharedPreferences(Constants.API, 0);
         //SharedPreferences.Editor editor = settings1.edit();
         //editor.putString("api", "pub_3299d32b8b154373c88df9cbebb156b295d3");
         //editor.apply();
         //Log.e("API IN HOME1", " " + settings1.getString("api", null));
+
 
         RecyclerView rcvNews = findViewById(R.id.rcvNews);
         rcvNews.setLayoutManager(new LinearLayoutManager(this));
@@ -131,7 +134,10 @@ public class HomeActivity extends AppCompatActivity {
             keywordSearch.setText(getIntent().getStringExtra(FILTER_KEYWORD));
         }
 
-        //showNews();
+        logoLayout = findViewById(R.id.homeLogo);
+
+
+        showNews();
         firstInit = false;
     }
 
@@ -179,9 +185,18 @@ public class HomeActivity extends AppCompatActivity {
 
     private void showNews() {
         String keywordString = parseKeywords();
+        Log.e("Keywords: ", " " + keywordString + "|" + lastKeyword);
+        Log.e("ArticleCount: ", " " + allArticles.size());
         if(keywordString == lastKeyword) {
-            if (allArticles.size() > 0)
+            if (allArticles.size() > 0) {
+                logoLayout.setVisibility(LinearLayout.GONE);
+                Log.e("shownews", "SETTING INVISIBLE!");
                 newsArticleAdapter.displayNewsArticles(allArticles);
+            }
+            else{
+                Log.e("shownews", "SETTING VISIBLE!");
+                logoLayout.setVisibility(LinearLayout.VISIBLE);
+            }
         }
         else updateNews();
     }
@@ -224,12 +239,27 @@ public class HomeActivity extends AppCompatActivity {
                         JSONArray results = obj.getJSONArray("results");
 
                         Gson gson = new Gson();
-                        for (int i = 0; i < results.length(); i++){
+                        int i = 0;
+                        for (; i < results.length(); i++){
                             addToList(results.getJSONObject(i));
+                        }
+                        if(i > 0){
+                            Log.e("updatenews", "SETTING INVISIBLE!");
+                            logoLayout.setVisibility(LinearLayout.GONE);
+                            Log.e("AHSF", "DO SHIT! " + results.length());
+                        }
+                        else {
+                            Log.e("updatenews", "SETTING INVISIBLE!");
+                            logoLayout.setVisibility(LinearLayout.VISIBLE);
                         }
                     }
                     return allArticles;
-                }catch(Exception e){Log.e(TAG, "1" + e.getMessage()); return null;}
+                }catch(Exception e){
+                    Log.e(TAG, "1" + e.getMessage());
+                    Log.e("update exception", "SETTING VISIBLE!");
+                    logoLayout.setVisibility(LinearLayout.VISIBLE);
+                    return null;
+                }
             }
 
             @Override

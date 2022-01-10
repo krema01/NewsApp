@@ -3,6 +3,7 @@ package com.example.canteenchecker.mynews.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,13 +34,7 @@ public class HelpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(apiChangeText.getText().toString().length() > 0) {
-                    SharedPreferences settings = getApplicationContext().getSharedPreferences(Constants.API, 0);
-
-                    SharedPreferences.Editor editor = settings.edit();
-                    editor.remove("api");
-                    editor.putString("api", apiChangeText.getText().toString());
-                    Constants.API = apiChangeText.getText().toString();
-                    editor.apply();
+                    Constants.setAPI(apiChangeText.getText().toString());
                     Intent intent = new Intent(HelpActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }
