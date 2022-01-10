@@ -3,6 +3,7 @@ package com.example.canteenchecker.mynews.ui;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -88,6 +89,11 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         new Constants(this);
 
+        //SharedPreferences settings1 = getApplicationContext().getSharedPreferences(Constants.API, 0);
+        //SharedPreferences.Editor editor = settings1.edit();
+        //editor.putString("api", "pub_3299d32b8b154373c88df9cbebb156b295d3");
+        //editor.apply();
+        //Log.e("API IN HOME1", " " + settings1.getString("api", null));
 
         RecyclerView rcvNews = findViewById(R.id.rcvNews);
         rcvNews.setLayoutManager(new LinearLayoutManager(this));
@@ -125,7 +131,7 @@ public class HomeActivity extends AppCompatActivity {
             keywordSearch.setText(getIntent().getStringExtra(FILTER_KEYWORD));
         }
 
-        showNews();
+        //showNews();
         firstInit = false;
     }
 
@@ -172,8 +178,11 @@ public class HomeActivity extends AppCompatActivity {
     /*========== Helper Functions ==========*/
 
     private void showNews() {
-        if(allArticles.size() > 0)
-            newsArticleAdapter.displayNewsArticles(allArticles);
+        String keywordString = parseKeywords();
+        if(keywordString == lastKeyword) {
+            if (allArticles.size() > 0)
+                newsArticleAdapter.displayNewsArticles(allArticles);
+        }
         else updateNews();
     }
 
@@ -272,7 +281,10 @@ public class HomeActivity extends AppCompatActivity {
             if (keyword.charAt(i) != ' ') sb.append(keyword.charAt(i));
             else sb.append("%20");
         }
-        return sb.toString();
+        return sb.toString().replace("and", "AND")
+                .replace("And", "AND")
+                .replace("or", "OR")
+                .replace("Or", "OR");
     }
 
     private void addToList(JSONObject jsonObject) throws JSONException {

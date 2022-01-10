@@ -103,13 +103,14 @@ public class FilterActivity extends AppCompatActivity {
         moreFilters = menu.findItem(R.id.mniMoreFilters);
         help = menu.findItem(R.id.mniHelp);
 
-
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.mniMoreFilters).setVisible(false);
+
+        help.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         menu.findItem(R.id.mniHelp).setVisible(true);
         return super.onPrepareOptionsMenu(menu);
     }

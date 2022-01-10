@@ -14,7 +14,7 @@
         android:theme="@style/Theme.MyNews">
 
         <activity
-            android:name=".ui.HomeActivity"
+            android:name=".ui.LoginActivity"
             android:exported="true"
             android:launchMode="singleTop">
             <intent-filter>
@@ -39,6 +39,9 @@
         <activity
             android:name=".ui.CategoriesActivity"
             android:exported="false"/>
+        <activity
+        android:name=".ui.HomeActivity"
+        android:exported="false"/>
 
 
         <activity

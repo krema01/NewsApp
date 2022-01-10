@@ -18,9 +18,10 @@
         <entry key="app/src/main/res/layout/activity_countries.xml" value="0.1017901924813352" />
         <entry key="app/src/main/res/layout/activity_dates.xml" value="0.18107668164459934" />
         <entry key="app/src/main/res/layout/activity_filter.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_help.xml" value="0.14635416666666667" />
+        <entry key="app/src/main/res/layout/activity_help.xml" value="0.27927772717785615" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_languages.xml" value="0.21603260869565216" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1328125" />
         <entry key="app/src/main/res/layout/activity_news_article_details.xml" value="0.3030867353254708" />
         <entry key="app/src/main/res/layout/item_news_article.xml" value="0.2936396994564002" />
         <entry key="app/src/main/res/menu/menu_activity_home_screen.xml" value="0.14635416666666667" />

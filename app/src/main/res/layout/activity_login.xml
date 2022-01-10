@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/loginLogo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/loginLinearLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/logo"
+        />
+
+    <LinearLayout
+        android:id="@+id/loginLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/loginLinkDescription"
+        android:paddingBottom="@dimen/distance_large">
+
+        <EditText
+            android:id="@+id/loginApi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/distance_large"
+            android:hint="Enter API Key"
+            android:textAlignment="center"/>
+        <Button
+            android:id="@+id/loginApplyButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/loginApply"
+            android:layout_margin="@dimen/distance_large"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/loginLinkDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/loginLinkDescription"
+        android:textAlignment="center"
+        android:layout_margin="@dimen/distance_large"
+        app:layout_constraintBottom_toTopOf="@id/loginLink"/>
+    <TextView
+        android:id="@+id/loginLink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:textAlignment="center"
+        android:layout_margin="@dimen/distance_large"
+        android:text="https://newsdata.io"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <!--android:background="#408c5930">-->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/helpTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/open_help"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/TextAppearance.MaterialComponents.Headline3"
+            android:padding="@dimen/distance_small"
+            />
+
+        <TextView
+            android:id="@+id/helpKeywordSearchTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/keywordSearch"
+            app:layout_constraintTop_toBottomOf="@id/helpTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:paddingStart="@dimen/distance_medium"/>
+
+        <TextView
+           android:id="@+id/helpKeywordSearchPatterns"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="@string/validKeywordPatterns"
+           app:layout_constraintTop_toBottomOf="@+id/helpKeywordSearchTitle"
+           style="@style/TextAppearance.MaterialComponents.Body1"
+           android:paddingStart="@dimen/distance_large"
+           android:paddingTop="@dimen/distance_medium"/>
+
+        <!--StandardSearch -->
+        <LinearLayout
+            android:id="@+id/helpKeywordSearchPatternStandard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/helpKeywordSearchPatterns"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/distance_large"
+            android:layout_margin="@dimen/distance_small">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/validKeywordPatternStandardTitle"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/validKeywordPatternStandardExample"
+                style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                android:paddingStart="@dimen/distance_medium"/>
+        </LinearLayout>
+
+        <!--ExcludedSearch -->
+        <LinearLayout
+            android:id="@+id/helpKeywordSearchPatternExclude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/helpKeywordSearchPatternStandard"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/distance_large"
+            android:layout_margin="@dimen/distance_small">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/validKeywordPatternExcludeTitle"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/validKeywordPatternExcludeExample"
+                style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                android:paddingStart="@dimen/distance_medium"/>
+        </LinearLayout>
+
+        <!--AndSearch -->
+        <LinearLayout
+            android:id="@+id/helpKeywordSearchPatternAnd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/helpKeywordSearchPatternExclude"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/distance_large"
+            android:layout_margin="@dimen/distance_small">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/validKeywordPatternAndTitle"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/validKeywordPatternAndExample"
+                style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                android:paddingStart="@dimen/distance_medium"/>
+
+        </LinearLayout>
+
+        <!--OrSearch -->
+        <LinearLayout
+            android:id="@+id/helpKeywordSearchPatternOr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/helpKeywordSearchPatternAnd"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/distance_large"
+            android:layout_margin="@dimen/distance_small">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/validKeywordPatternOrTitle"
+            style="@style/TextAppearance.MaterialComponents.Subtitle1"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/validKeywordPatternOrExample"
+            style="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:paddingStart="@dimen/distance_medium"/>
+
+        </LinearLayout>
+
+        <!--Hint -->
+        <LinearLayout
+            android:id="@+id/helpKeywordSearchHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/helpKeywordSearchPatternOr"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/distance_large"
+            android:layout_margin="@dimen/distance_small">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/keywordSearchAndOrHintTitle"
+                android:textColor="@color/color_red_button"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/keywordSearchAndOrHintExample"
+                android:textColor="@color/color_red_button"
+                style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                android:paddingStart="@dimen/distance_medium"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/loginLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingBottom="@dimen/distance_large">
+
+            <EditText
+                android:id="@+id/helpChangeApi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/distance_large"
+                android:layout_marginRight="@dimen/distance_large"
+                android:hint="@string/change_api_key"
+                android:textAlignment="center"/>
+            <Button
+                android:id="@+id/helpChangeApiButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/apiChangeApply"
+                android:layout_margin="@dimen/distance_medium"/>
+            <TextView
+                android:id="@+id/newsDataLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:textAlignment="center"
+                android:text="https://newsdata.io"/>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+</LinearLayout>

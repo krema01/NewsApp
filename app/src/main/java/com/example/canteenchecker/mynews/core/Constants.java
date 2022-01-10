@@ -13,7 +13,7 @@ import java.util.Map;
 public class Constants {
     private Context context;
     public static final String BASE_URL = "https://newsdata.io/api/1/news?apikey=";
-    public static final String API = "pub_3299d32b8b154373c88df9cbebb156b295d3";
+    public static String API = null;
     public static final String AND = "&";
 
     public static final String COPYRIGHT = "\u00a9";

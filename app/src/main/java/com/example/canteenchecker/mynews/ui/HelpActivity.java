@@ -1,20 +1,51 @@
 package com.example.canteenchecker.mynews.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.canteenchecker.mynews.R;
+import com.example.canteenchecker.mynews.core.Constants;
 
 public class HelpActivity extends AppCompatActivity {
 
     private MenuItem moreFilters;
     private MenuItem help;
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_help);
+
+        EditText apiChangeText = findViewById(R.id.helpChangeApi);
+        Button apiChangeButton = findViewById(R.id.helpChangeApiButton);
+        apiChangeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(apiChangeText.getText().toString().length() > 0) {
+                    SharedPreferences settings = getApplicationContext().getSharedPreferences(Constants.API, 0);
+
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.remove("api");
+                    editor.putString("api", apiChangeText.getText().toString());
+                    Constants.API = apiChangeText.getText().toString();
+                    editor.apply();
+                    Intent intent = new Intent(HelpActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
