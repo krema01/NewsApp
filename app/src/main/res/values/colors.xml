@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="color_red_button">#FF990702</color>
+    <color name="color_green_button">#FF018A26</color>
+
+    <color name="beaver">#FFAD8871</color>
+    <color name="silver_pink">#FFC3A897</color>
+    <color name="linen">#FFEFE5DC</color>
+
+
+    <color name="queen_pink">#FFDBC2CF</color>
+    <color name="manatee">#FF9FA2B2</color>
+    <color name="teal_blue">#FF3C7A89</color>
+    <color name="charcoal">#FF2E4756</color>
+    <color name="gunmetal">#FF16262E</color>
+
+
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -7,4 +24,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+
+
 </resources>

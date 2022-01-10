@@ -122,7 +122,6 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         //showNews();
-        //updateNews();
         firstInit = false;
     }
 

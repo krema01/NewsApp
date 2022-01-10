@@ -3,9 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2578125" />
+        <entry key="app/src/main/res/drawable/baseline_category_black_48dp.xml" value="0.2578125" />
+        <entry key="app/src/main/res/drawable/baseline_check_circle_green_800_24dp.xml" value="0.13802083333333334" />
         <entry key="app/src/main/res/drawable/baseline_check_circle_green_800_48dp.xml" value="0.14895833333333333" />
+        <entry key="app/src/main/res/drawable/baseline_date_range_black_48dp.xml" value="0.2578125" />
+        <entry key="app/src/main/res/drawable/baseline_help_black_48dp.xml" value="0.2578125" />
         <entry key="app/src/main/res/drawable/baseline_language_black_24dp.xml" value="0.2578125" />
+        <entry key="app/src/main/res/drawable/baseline_language_black_48dp.xml" value="0.13802083333333334" />
         <entry key="app/src/main/res/drawable/baseline_location_on_black_24dp.xml" value="0.2578125" />
+        <entry key="app/src/main/res/drawable/baseline_location_on_black_48dp.xml" value="0.2578125" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2578125" />
         <entry key="app/src/main/res/layout/activity_categories.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_countries.xml" value="0.1017901924813352" />
         <entry key="app/src/main/res/layout/activity_dates.xml" value="0.18107668164459934" />
