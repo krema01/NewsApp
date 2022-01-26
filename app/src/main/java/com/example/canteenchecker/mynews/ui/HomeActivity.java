@@ -3,14 +3,8 @@ package com.example.canteenchecker.mynews.ui;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,11 +37,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -58,7 +48,6 @@ import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity {
     private String TAG = getClass().getName();
-    //Constants constants = new Constants();
 
 
     private static boolean firstInit = true;
@@ -91,33 +80,16 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //SharedPreferences settings1 = getApplicationContext().getSharedPreferences(Constants.API, 0);
-        //SharedPreferences.Editor editor = settings1.edit();
-        //editor.putString("api", "pub_3299d32b8b154373c88df9cbebb156b295d3");
-        //editor.apply();
-        //Log.e("API IN HOME1", " " + settings1.getString("api", null));
-
 
         RecyclerView rcvNews = findViewById(R.id.rcvNews);
         rcvNews.setLayoutManager(new LinearLayoutManager(this));
         rcvNews.setAdapter(newsArticleAdapter);
 
         srlSwipeRefreshLayout = findViewById(R.id.srlSwipeRefreshLayout);
-        srlSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                //Todo: load next page from API
-                updateNews();
-            }
-        });
+        srlSwipeRefreshLayout.setOnRefreshListener(() -> { updateNews(); });
 
         btnSearch = findViewById(R.id.btnSearch);
-        btnSearch.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                updateNews();
-            }
-        });
+        btnSearch.setOnClickListener(v -> updateNews());
 
         keywordSearch = findViewById(R.id.edtKeywordSearch);
 
@@ -185,20 +157,23 @@ public class HomeActivity extends AppCompatActivity {
 
     private void showNews() {
         String keywordString = parseKeywords();
-        Log.e("Keywords: ", " " + keywordString + "|" + lastKeyword);
-        Log.e("ArticleCount: ", " " + allArticles.size());
+        Log.e("Keywords: ", " " + keywordString + "||" + lastKeyword);
         if(keywordString == lastKeyword) {
+            Log.e("Keywords: ", " MATCH");
             if (allArticles.size() > 0) {
                 logoLayout.setVisibility(LinearLayout.GONE);
-                Log.e("shownews", "SETTING INVISIBLE!");
                 newsArticleAdapter.displayNewsArticles(allArticles);
             }
             else{
-                Log.e("shownews", "SETTING VISIBLE!");
                 logoLayout.setVisibility(LinearLayout.VISIBLE);
             }
         }
         else updateNews();
+    }
+
+    @Override
+    public void onBackPressed() {
+        return;
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -211,14 +186,12 @@ public class HomeActivity extends AppCompatActivity {
 
                 try {
                     URL url = new URL(buildUrlWithFilters());
-                    Log.e("URL ==> ", url.toString());
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
                     conn.setRequestMethod("GET");
                     conn.connect();
 
                     int responseCode = conn.getResponseCode();
-                    Log.e(TAG, "success" + responseCode);
                     if(responseCode != 200){
                         throw new RuntimeException("HttpResponseCode: " + responseCode);
                     }
@@ -230,7 +203,8 @@ public class HomeActivity extends AppCompatActivity {
                         StringBuilder sb = new StringBuilder();
                         String line;
                         while ((line = br.readLine()) != null) {
-                            sb.append(line+"\n");
+                            String newLine = line + "\n";
+                            sb.append(newLine);
                         }
                         br.close();
 
@@ -238,25 +212,18 @@ public class HomeActivity extends AppCompatActivity {
                         JSONObject obj = new JSONObject(jsonString);
                         JSONArray results = obj.getJSONArray("results");
 
-                        Gson gson = new Gson();
                         int i = 0;
                         for (; i < results.length(); i++){
                             addToList(results.getJSONObject(i));
                         }
-                        if(i > 0){
-                            Log.e("updatenews", "SETTING INVISIBLE!");
+                        if(i > 0)
                             logoLayout.setVisibility(LinearLayout.GONE);
-                            Log.e("AHSF", "DO SHIT! " + results.length());
-                        }
-                        else {
-                            Log.e("updatenews", "SETTING INVISIBLE!");
+                        else
                             logoLayout.setVisibility(LinearLayout.VISIBLE);
-                        }
+
                     }
                     return allArticles;
                 }catch(Exception e){
-                    Log.e(TAG, "1" + e.getMessage());
-                    Log.e("update exception", "SETTING VISIBLE!");
                     logoLayout.setVisibility(LinearLayout.VISIBLE);
                     return null;
                 }
@@ -288,7 +255,8 @@ public class HomeActivity extends AppCompatActivity {
         }
         if(!keywordSearch.getText().toString().matches("")){
             String keywordString = parseKeywords();
-            if(keywordString != lastKeyword){
+
+            if(keywordString.equals(lastKeyword)){
                 FilterSettings.setPage(0);
                 lastKeyword = keywordString;
             }
@@ -365,7 +333,6 @@ public class HomeActivity extends AppCompatActivity {
             private final TextView itemTitleView = itemView.findViewById(R.id.itemTitleView);
             private final TextView itemSourceView = itemView.findViewById(R.id.itemSourceView);
             private final TextView itemPublishDateView = itemView.findViewById(R.id.itemPublishDateView);
-            //private final TextView itemDescriptionView = itemView.findViewById(R.id.itemDescriptionView);
             private final ImageView itemImageView = itemView.findViewById(R.id.itemImageView);
 
             public ViewHolder(@NonNull View itemView) {
@@ -385,16 +352,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 }else {
                     itemImageView.setVisibility(View.GONE);
-                    //itemView.setOnClickListener(v -> v.getContext()
-                    //        .startActivity(NewsArticleDetailsActivity
-                    //                .createIntent(v.getContext(), newsArticle.getTitle(),
-                    //                        newsArticle.getPublishDate(),
-                    //                        newsArticle.getSourceID(), newsArticle.getDescription(),
-                    //                        newsArticle.getArticleUrl())));
                 }
-                //ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                //newsArticle.getImageBitmap().compress(Bitmap.CompressFormat.PNG, 100, stream);
-                //byte[] byteArray = stream.toByteArray();
                 itemView.setOnClickListener(v -> v.getContext()
                         .startActivity(NewsArticleDetailsActivity
                                 .createIntent(v.getContext(), newsArticle.getTitle(),
@@ -402,17 +360,6 @@ public class HomeActivity extends AppCompatActivity {
                                         newsArticle.getSourceID(), newsArticle.getDescription(),
                                         newsArticle.getArticleUrl(), newsArticle.getFullDescription())));
 
-                //itemView.setOnClickListener(new View.OnClickListener(){
-//
-                //    @Override
-                //    public void onClick(View v) {
-                //        Log.e("CLICK:", "NOT IMPLEMENTED YET");
-                //        //detailsIntent.putExtra("message", message);
-                //        //startActivity(intent);
-//
-                //        //Todo: Switch to Article View (create article view first)
-                //    }
-                //});
             }
         }
     }
